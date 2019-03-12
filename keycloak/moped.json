@@ -55,8 +55,8 @@
   ],
   "clients": [
     {
-      "clientId": "moped-client",
-      "name": "moped-client",
+      "clientId": "moped",
+      "name": "moped",
       "description": "Moped Client",
       "enabled": true,
       "clientAuthenticatorType": "client-secret",

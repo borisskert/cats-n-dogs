@@ -1,0 +1,6 @@
+application:
+  authentication:
+    client-id: moped
+    client-secret: my-special-moped-client-secret
+    access-token-uri: http://localhost:9090/auth/realms/moped/protocol/openid-connect/token
+    user-info-uri: http://localhost:9090/auth/realms/moped/protocol/openid-connect/userinfo
