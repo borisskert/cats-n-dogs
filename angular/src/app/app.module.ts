@@ -9,6 +9,7 @@ import { Effects } from './+state/effects';
 import { metaReducers, reducers } from './+state/reducer';
 import { AppConfig } from './app.config';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,11 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([ Effects ]),
-    HttpClientModule,
+    AppRoutingModule,
+    AuthenticationModule,
   ],
   providers: [
     AppConfig, {

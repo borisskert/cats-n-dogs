@@ -1,0 +1,6 @@
+<app-user-info
+  *ngIf="isAuthenticated$ | async"
+  [userInfo]="userInfo$ | async"
+>
+</app-user-info>
+<app-login *ngIf="!(isAuthenticated$ | async)" (login)="onLogin($event)"></app-login>
