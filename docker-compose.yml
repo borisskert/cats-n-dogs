@@ -28,3 +28,25 @@ services:
       - WAIT_TIME_IN_SECONDS=300
       - SPRING_PROFILES_INCLUDE=debug
     command: config-cli
+
+  springboot:
+    image: local/authentication-backend:latest
+    build: ./springboot
+    ports:
+      - "7070:8080"
+    depends_on:
+      - keycloak
+    links:
+      - keycloak
+
+  angular:
+    image: local/authentication-frontend:latest
+    build: ./angular
+    ports:
+      - "6060:80"
+    depends_on:
+      - springboot
+    links:
+      - springboot
+    environment:
+      - NG_BACKEND_URL=http://localhost:7070
