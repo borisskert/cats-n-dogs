@@ -1,0 +1,73 @@
+{
+  "id": "moped",
+  "realm": "moped",
+  "displayName": "Moped Realm",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "moped_admin",
+        "description": "Admin role",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "moped_user",
+        "description": "User",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@mail.org",
+      "enabled": true,
+      "firstName": "Test",
+      "lastName": "Admin",
+      "realmRoles": [
+        "moped_admin"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123"
+        }
+      ]
+    },
+    {
+      "username": "user",
+      "email": "user@mail.org",
+      "enabled": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "realmRoles": [
+        "moped_user"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123"
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "moped-client",
+      "name": "moped-client",
+      "description": "Moped Client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "my-special-moped-client-secret",
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ]
+}

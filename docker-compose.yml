@@ -1,0 +1,30 @@
+version: '3.1'
+services:
+  keycloak:
+    image: jboss/keycloak:4.8.3.Final
+    environment:
+      KEYCLOAK_PASSWORD: admin123
+      KEYCLOAK_USER: admin
+    ports:
+      - "9090:8080"
+      - "9797:8787"
+    command:
+      - "-b"
+      - "0.0.0.0"
+      - "--debug"
+
+  keycloak_config_import:
+    image: adorsys/keycloak-config-cli:v0.4.3-4.8.3.Final
+    depends_on:
+      - keycloak
+    links:
+      - keycloak
+    volumes:
+      - ./keycloak:/tmp/keycloak-config-cli/configs
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin123
+      - WAIT_TIME_IN_SECONDS=300
+      - SPRING_PROFILES_INCLUDE=debug
+    command: config-cli
