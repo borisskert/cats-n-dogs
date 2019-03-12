@@ -6,6 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { metaReducers, reducers } from './+state/reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { Effects } from './+state/effects';
+import { AppConfig } from './app.config';
+import { MockedAppConfig } from './app.config.mock';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -19,6 +21,12 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        {
+          provide: AppConfig,
+          useClass: MockedAppConfig
+        }
+      ]
     }).compileComponents();
   }));
 
