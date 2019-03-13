@@ -5,3 +5,4 @@ application:
     access-token-uri: http://localhost:9090/auth/realms/moped/protocol/openid-connect/token
     user-info-uri: http://localhost:9090/auth/realms/moped/protocol/openid-connect/userinfo
     end-session-endpoint: http://localhost:9090/auth/realms/moped/protocol/openid-connect/logout
+    use-secure-cookies: false

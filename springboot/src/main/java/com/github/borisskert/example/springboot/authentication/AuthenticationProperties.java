@@ -2,16 +2,31 @@ package com.github.borisskert.example.springboot.authentication;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotNull;
 
 @Component
 @ConfigurationProperties(prefix = "application.authentication")
+@Validated
 public class AuthenticationProperties {
 
+    @NotNull
     private String clientId;
+
+    @NotNull
     private String clientSecret;
+
+    @NotNull
     private String accessTokenUri;
+
+    @NotNull
     private String userInfoUri;
+
+    @NotNull
     private String endSessionEndpoint;
+
+    private Boolean useSecureCookies = true;
 
     public String getClientId() {
         return clientId;
@@ -51,5 +66,13 @@ public class AuthenticationProperties {
 
     public void setEndSessionEndpoint(String endSessionEndpoint) {
         this.endSessionEndpoint = endSessionEndpoint;
+    }
+
+    public Boolean getUseSecureCookies() {
+        return useSecureCookies;
+    }
+
+    public void setUseSecureCookies(Boolean useSecureCookies) {
+        this.useSecureCookies = useSecureCookies;
     }
 }

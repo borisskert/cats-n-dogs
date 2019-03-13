@@ -1,12 +1,21 @@
 package com.github.borisskert.example.springboot.authentication.service;
 
+import com.github.borisskert.example.springboot.authentication.AuthenticationProperties;
 import com.github.borisskert.example.springboot.authentication.TokenConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 
 @Service
 public class CookieService {
+
+    private final AuthenticationProperties properties;
+
+    @Autowired
+    public CookieService(AuthenticationProperties properties) {
+        this.properties = properties;
+    }
 
     public Cookie createAccessTokenCookie(String token, Long expiration) {
         return createCookie(TokenConstants.ACCESS_TOKEN_COOKIE_NAME, token, "/", expiration.intValue());
@@ -27,7 +36,7 @@ public class CookieService {
     private Cookie createCookie(String name, String value, String path, int maxAge) {
         Cookie cookie = new Cookie(name, value);
 
-        cookie.setSecure(false);
+        cookie.setSecure(properties.getUseSecureCookies());
         cookie.setHttpOnly(true);
         cookie.setPath(path);
         cookie.setMaxAge(maxAge);
@@ -38,7 +47,7 @@ public class CookieService {
     private Cookie expireCookie(String name, String path) {
         Cookie cookie = new Cookie(name, null);
 
-        cookie.setSecure(false);
+        cookie.setSecure(properties.getUseSecureCookies());
         cookie.setHttpOnly(true);
         cookie.setPath(path);
         cookie.setMaxAge(0);
