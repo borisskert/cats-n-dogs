@@ -9,20 +9,39 @@ import javax.servlet.http.Cookie;
 public class CookieService {
 
     public Cookie createAccessTokenCookie(String token, Long expiration) {
-        return creationCookie(TokenConstants.ACCESS_TOKEN_COOKIE_NAME, token, "/", expiration.intValue());
+        return createCookie(TokenConstants.ACCESS_TOKEN_COOKIE_NAME, token, "/", expiration.intValue());
     }
 
     public Cookie createRefreshTokenCookie(String token, Long expiration) {
-        return creationCookie(TokenConstants.REFRESH_TOKEN_COOKIE_NAME, token, "/", expiration.intValue());
+        return createCookie(TokenConstants.REFRESH_TOKEN_COOKIE_NAME, token, "/", expiration.intValue());
     }
 
-    private Cookie creationCookie(String name, String value, String path, int maxAge) {
+    public Cookie expireAccessTokenCookie() {
+        return expireCookie(TokenConstants.ACCESS_TOKEN_COOKIE_NAME, "/");
+    }
+
+    public Cookie expireRefreshTokenCookie() {
+        return expireCookie(TokenConstants.REFRESH_TOKEN_COOKIE_NAME, "/");
+    }
+
+    private Cookie createCookie(String name, String value, String path, int maxAge) {
         Cookie cookie = new Cookie(name, value);
 
         cookie.setSecure(false);
         cookie.setHttpOnly(true);
         cookie.setPath(path);
         cookie.setMaxAge(maxAge);
+
+        return cookie;
+    }
+
+    private Cookie expireCookie(String name, String path) {
+        Cookie cookie = new Cookie(name, null);
+
+        cookie.setSecure(false);
+        cookie.setHttpOnly(true);
+        cookie.setPath(path);
+        cookie.setMaxAge(0);
 
         return cookie;
     }

@@ -36,9 +36,9 @@ public class AuthenticationTokenValidationService {
         Optional<UserInfo> maybeUserInfo = authenticationService.tryToGetUserInfo(accessToken);
 
         if (maybeUserInfo.isPresent()) {
-            validation = AuthenticationTokenValidation.valid(accessToken, maybeUserInfo.get());
+            validation = AuthenticationTokenValidation.valid(accessToken, refreshToken, maybeUserInfo.get());
         } else if (refreshToken == null) {
-            validation = AuthenticationTokenValidation.invalid(accessToken);
+            validation = AuthenticationTokenValidation.invalid(accessToken, refreshToken);
         } else {
             validation = refreshTokens(accessToken, refreshToken);
         }
@@ -60,7 +60,7 @@ public class AuthenticationTokenValidationService {
                 throw new AuthenticationTokenValidationException("Should never happen: Cant get user info for recently refreshed access token");
             }
         } else {
-            validation = AuthenticationTokenValidation.invalid(accessToken);
+            validation = AuthenticationTokenValidation.invalid(accessToken, refreshToken);
         }
 
         return validation;

@@ -61,6 +61,7 @@ public class AuthenticationTokenValidationServiceTest {
         AuthenticationTokenValidation validation = validationService.validate(null, null);
         assertThat(validation.isValid(), is(false));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(null)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(null)));
     }
 
     @Test
@@ -70,6 +71,7 @@ public class AuthenticationTokenValidationServiceTest {
         AuthenticationTokenValidation validation = validationService.validate(MY_ACCESS_TOKEN, null);
         assertThat(validation.isValid(), is(false));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(MY_ACCESS_TOKEN)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(null)));
     }
 
     @Test
@@ -81,6 +83,7 @@ public class AuthenticationTokenValidationServiceTest {
         assertThat(validation.isHasBeenRefreshed(), is(false));
         assertThat(validation.getUserInfo(), is(sameInstance(userInfoForAccessToken)));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(MY_ACCESS_TOKEN)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(null)));
     }
 
     @Test
@@ -96,6 +99,7 @@ public class AuthenticationTokenValidationServiceTest {
         assertThat(validation.getAuthenticationToken(), is(sameInstance(refreshedAuthenticationToken)));
         assertThat(validation.getUserInfo(), is(sameInstance(userInfoForRefreshedAccessToken)));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(MY_REFRESHED_ACCESS_TOKEN)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(MY_REFRESHED_REFRESH_TOKEN)));
     }
 
     @Test
@@ -109,6 +113,7 @@ public class AuthenticationTokenValidationServiceTest {
         assertThat(validation.isValid(), is(false));
         assertThat(validation.isHasBeenRefreshed(), is(false));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(MY_ACCESS_TOKEN)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(MY_REFRESH_TOKEN)));
     }
 
     @Test
@@ -123,6 +128,7 @@ public class AuthenticationTokenValidationServiceTest {
         assertThat(validation.getAuthenticationToken(), is(sameInstance(refreshedAuthenticationToken)));
         assertThat(validation.getUserInfo(), is(sameInstance(userInfoForRefreshedAccessToken)));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(MY_REFRESHED_ACCESS_TOKEN)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(MY_REFRESHED_REFRESH_TOKEN)));
     }
 
     @Test
@@ -135,6 +141,7 @@ public class AuthenticationTokenValidationServiceTest {
         assertThat(validation.isValid(), is(false));
         assertThat(validation.isHasBeenRefreshed(), is(false));
         assertThat(validation.getValidatedAccessToken(), is(equalTo(null)));
+        assertThat(validation.getValidatedRefreshAccessToken(), is(equalTo(MY_REFRESH_TOKEN)));
     }
 
     @Test

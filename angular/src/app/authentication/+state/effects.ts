@@ -5,8 +5,8 @@ import {
   AuthenticationActions,
   AuthenticationActionTypes,
   LoginFailure,
-  LoginSuccessful,
-  TryLogin,
+  LoginSuccessful, LogoutFailure, LogoutSuccessful,
+  TryLogin, TryLogout,
   UserInfoLoadFailure,
   UserInfoLoadSuccessful
 } from './actions';
@@ -31,6 +31,18 @@ export class Effects {
         .pipe(
           map(() => new LoginSuccessful()),
           catchError(() => of(new LoginFailure()))
+        );
+    })
+  );
+
+  @Effect()
+  tryToLogout$: Observable<AuthenticationActions> = this.actions$.pipe(
+    ofType<TryLogout>(AuthenticationActionTypes.TryLogout),
+    switchMap(() => {
+      return this.loginService.tryLogout()
+        .pipe(
+          map(() => new LogoutSuccessful()),
+          catchError(() => of(new LogoutFailure()))
         );
     })
   );

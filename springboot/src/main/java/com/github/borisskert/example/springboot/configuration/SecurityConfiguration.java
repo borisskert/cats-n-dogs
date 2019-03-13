@@ -31,25 +31,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .cors()
-                .configurationSource(corsConfigurationSource())
-                .and()
+                    .configurationSource(corsConfigurationSource())
+                    .and()
                 .antMatcher("/**")
                 .authorizeRequests()
-                // https://stackoverflow.com/questions/53442381/cors-policy-no-access-control-allow-origin-header-is-present-on-the-requested
-                .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers(
+                    // https://stackoverflow.com/questions/53442381/cors-policy-no-access-control-allow-origin-header-is-present-on-the-requested
+                    .antMatchers(HttpMethod.OPTIONS).permitAll()
+                    .antMatchers(
                         "/",
-                        "/login"
-                ).permitAll()
-                .anyRequest().authenticated()
-                .and()
+                        "/auth/login"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .logout()
-                // https://stackoverflow.com/questions/43071370/spring-boot-oauth2-single-sign-off-logout/43147567#43147567
-                .logoutSuccessUrl("/").permitAll()
-                .and()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
                 .addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class);
     }
 

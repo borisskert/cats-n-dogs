@@ -2,13 +2,13 @@ package com.github.borisskert.example.springboot.authentication.filter;
 
 import com.github.borisskert.example.springboot.authentication.TokenConstants;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationToken;
+import com.github.borisskert.example.springboot.authentication.model.AuthenticationTokenAuthentication;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationTokenValidation;
 import com.github.borisskert.example.springboot.authentication.model.UserInfo;
 import com.github.borisskert.example.springboot.authentication.service.AuthenticationTokenValidationService;
 import com.github.borisskert.example.springboot.authentication.service.CookieService;
 import com.github.borisskert.example.springboot.authentication.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -58,18 +58,27 @@ public class AuthenticationFilter extends GenericFilterBean {
             context.setAuthentication(maybeAuthentication.orElse(null));
 
             if(validation.isHasBeenRefreshed()) {
-                handleRefreshedTokens((HttpServletResponse) response, validation);
+                refreshTokens((HttpServletResponse) response, validation);
+            }
+
+            if(!validation.isValid()) {
+                invalidateTokens((HttpServletResponse) response);
             }
         }
 
         chain.doFilter(request, response);
     }
 
-    private void handleRefreshedTokens(HttpServletResponse response, AuthenticationTokenValidation validation ) {
+    private void refreshTokens(HttpServletResponse response, AuthenticationTokenValidation validation ) {
         AuthenticationToken refreshedToken = validation.getAuthenticationToken();
 
         response.addCookie(cookieService.createAccessTokenCookie(refreshedToken.getAccessToken(), refreshedToken.getExpiresIn()));
         response.addCookie(cookieService.createRefreshTokenCookie(refreshedToken.getRefreshToken(), refreshedToken.getRefreshExpiresIn()));
+    }
+
+    private void invalidateTokens(HttpServletResponse response) {
+        response.addCookie(cookieService.expireAccessTokenCookie());
+        response.addCookie(cookieService.expireRefreshTokenCookie());
     }
 
     private AuthenticationTokenValidation validateTokensFromRequest(HttpServletRequest request) {
@@ -86,7 +95,7 @@ public class AuthenticationFilter extends GenericFilterBean {
         Optional<Authentication> authentication;
 
         if(validation.isValid()) {
-            authentication = Optional.of(getAuthentication(validation.getValidatedAccessToken(), validation.getUserInfo()));
+            authentication = Optional.of(getAuthentication(validation));
         } else {
             authentication = Optional.empty();
         }
@@ -99,8 +108,19 @@ public class AuthenticationFilter extends GenericFilterBean {
         return Optional.ofNullable(nullableCookie);
     }
 
-    private Authentication getAuthentication(String accessToken, UserInfo userInfo) {
+    private Authentication getAuthentication(AuthenticationTokenValidation validation) {
+        String accessToken = validation.getValidatedAccessToken();
+        String refreshToken = validation.getValidatedRefreshAccessToken();
+        UserInfo userInfo = validation.getUserInfo();
+
         List<SimpleGrantedAuthority> authorities = jwtService.getAuthorities(accessToken);
-        return new UsernamePasswordAuthenticationToken(userInfo.getSubject(), userInfo, authorities);
+
+        return new AuthenticationTokenAuthentication(
+                userInfo.getSubject(),
+                userInfo,
+                authorities,
+                new AuthenticationTokenAuthentication.AccessAndRefreshToken(accessToken, refreshToken)
+        );
     }
+
 }

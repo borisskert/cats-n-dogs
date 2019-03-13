@@ -19,6 +19,14 @@ export function reducer(state = initialState, action: AuthenticationActions): Au
       };
     }
 
+    case AuthenticationActionTypes.LogoutSuccessful: {
+      return {
+        ...state,
+        isAuthenticated: false,
+        userInfo: null
+      };
+    }
+
     default:
       return state;
   }

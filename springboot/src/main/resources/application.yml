@@ -4,3 +4,4 @@ application:
     client-secret: my-special-moped-client-secret
     access-token-uri: http://keycloak:8080/auth/realms/moped/protocol/openid-connect/token
     user-info-uri: http://keycloak:8080/auth/realms/moped/protocol/openid-connect/userinfo
+    end-session-endpoint: http://keycloak:8080/auth/realms/moped/protocol/openid-connect/logout

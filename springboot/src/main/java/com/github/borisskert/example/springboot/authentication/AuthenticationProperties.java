@@ -11,6 +11,7 @@ public class AuthenticationProperties {
     private String clientSecret;
     private String accessTokenUri;
     private String userInfoUri;
+    private String endSessionEndpoint;
 
     public String getClientId() {
         return clientId;
@@ -42,5 +43,13 @@ public class AuthenticationProperties {
 
     public void setUserInfoUri(String userInfoUri) {
         this.userInfoUri = userInfoUri;
+    }
+
+    public String getEndSessionEndpoint() {
+        return endSessionEndpoint;
+    }
+
+    public void setEndSessionEndpoint(String endSessionEndpoint) {
+        this.endSessionEndpoint = endSessionEndpoint;
     }
 }

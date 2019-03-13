@@ -17,8 +17,20 @@ export class LoginService {
 
   public tryLogin(credentials: LoginCredentials): Observable<void> {
     return this.httpClient.post(
-      `${this.appConfig.getValue('NG_BACKEND_URL')}/login`,
+      `${this.appConfig.getValue('NG_BACKEND_URL')}/auth/login`,
       credentials,
+      {
+        withCredentials: true
+      }
+    ).pipe(
+      map(() => null)
+    );
+  }
+
+  public tryLogout(): Observable<void> {
+    return this.httpClient.post(
+      `${this.appConfig.getValue('NG_BACKEND_URL')}/auth/logout`,
+      {},
       {
         withCredentials: true
       }

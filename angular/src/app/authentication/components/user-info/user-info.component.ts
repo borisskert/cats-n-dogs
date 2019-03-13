@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserInfo } from '../../models/user-info.interface';
 
 @Component({
@@ -9,9 +9,14 @@ import { UserInfo } from '../../models/user-info.interface';
 export class UserInfoComponent implements OnInit {
 
   @Input() userInfo: UserInfo;
+  @Output() logout = new EventEmitter<void>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onLogout() {
+    this.logout.emit();
   }
 }

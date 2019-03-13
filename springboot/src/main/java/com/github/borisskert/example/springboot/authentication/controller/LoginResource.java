@@ -6,6 +6,7 @@ import com.github.borisskert.example.springboot.authentication.service.Authentic
 import com.github.borisskert.example.springboot.authentication.service.CookieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-@RestController("/login")
+@RestController("/auth/login")
 public class LoginResource {
 
     private final AuthenticationService authenticationService;
