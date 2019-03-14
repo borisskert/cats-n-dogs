@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { Effects } from './+state/effects';
 import { AppConfig } from './app.config';
 import { MockedAppConfig } from './app.config.mock';
+import { MessagingModule } from './messaging/messaging.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -17,6 +18,7 @@ describe('AppComponent', () => {
         StoreModule.forRoot(reducers, { metaReducers }),
         EffectsModule.forRoot([ Effects ]),
         AuthenticationModule,
+        MessagingModule,
       ],
       declarations: [
         AppComponent

@@ -1,0 +1,5 @@
+<div *ngFor="let message of messages">
+  <span>{{message.timestamp}}</span>
+  <span>{{message.text}}</span>
+  <button type="button" (click)="onCloseMessage(message.id)">Close</button>
+</div>

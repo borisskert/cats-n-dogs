@@ -1,0 +1,4 @@
+<app-message-toaster
+  [messages]="messages$ | async"
+  (closeMessage)="closeMessage($event)"
+></app-message-toaster>

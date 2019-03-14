@@ -10,6 +10,7 @@ import { metaReducers, reducers } from './+state/reducer';
 import { AppConfig } from './app.config';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { MessagingModule } from './messaging/messaging.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
     EffectsModule.forRoot([ Effects ]),
     AppRoutingModule,
     AuthenticationModule,
+    MessagingModule,
   ],
   providers: [
     AppConfig, {

@@ -13,6 +13,8 @@ import {
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
+import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
+import * as cuid from 'cuid';
 
 @Injectable()
 export class Effects {
@@ -44,6 +46,19 @@ export class Effects {
           map(() => new LogoutSuccessful()),
           catchError(() => of(new LogoutFailure()))
         );
+    })
+  );
+
+  @Effect()
+  showLoginFailureMessage$: Observable<MessagingAction> = this.actions$.pipe(
+    ofType<LoginFailure>(AuthenticationActionTypes.LoginFailure),
+    map(() => {
+      return new NewMessage({
+        text: 'Login not successful',
+        type: 'warning',
+        id: cuid(),
+        timestamp: new Date()
+      });
     })
   );
 
