@@ -1,5 +1,9 @@
-<div *ngFor="let message of messages">
-  <span>{{message.timestamp}}</span>
-  <span>{{message.text}}</span>
-  <button type="button" (click)="onCloseMessage(message.id)">Close</button>
+<div class="message-toaster__container">
+  <ng-container *ngFor="let id of messageIds">
+    <app-message
+      [message]="getMessage(id)"
+      (close)="onCloseMessage(id)"
+      (isHovered)="$event ? onFixMessage(id) : onUnfixMessage(id)"
+    ></app-message>
+  </ng-container>
 </div>

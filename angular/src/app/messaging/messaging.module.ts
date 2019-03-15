@@ -4,6 +4,7 @@ import { MessageToasterComponent } from './components/message-toaster/message-to
 import { MessagingContainerComponent } from './containers/messaging-container/messaging-container.component';
 import { EffectsModule } from '@ngrx/effects';
 import { Effects } from './+state/effects';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { Effects } from './+state/effects';
   ],
   declarations: [
     MessageToasterComponent,
-    MessagingContainerComponent
+    MessagingContainerComponent,
+    MessageComponent
   ],
   exports: [
     MessagingContainerComponent

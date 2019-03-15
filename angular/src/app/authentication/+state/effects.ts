@@ -57,7 +57,7 @@ export class Effects {
         text: 'Login not successful',
         type: 'warning',
         id: cuid(),
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     })
   );

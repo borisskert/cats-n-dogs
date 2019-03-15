@@ -6,19 +6,35 @@ export function reducer(state = initialState, action: MessagingAction): Messagin
     case MessagingActionTypes.NewMessage: {
       return {
         ...state,
-        messages: [
+        messageIds: [
+          ...state.messageIds,
+          action.payload.id
+        ],
+        messages: {
           ...state.messages,
-          action.payload
-        ]
+          [action.payload.id]: action.payload
+        }
       };
     }
 
     case MessagingActionTypes.CloseMessage: {
       return {
         ...state,
-        messages: [
-        ...state.messages.filter(message => message.id !== action.payload)
-        ]
+        messageIds: state.messageIds.filter(id => id !== action.payload),
+      };
+    }
+
+    case MessagingActionTypes.FixMessage: {
+      return {
+        ...state,
+        autoDismiss: false,
+      };
+    }
+
+    case MessagingActionTypes.UnfixMessage: {
+      return {
+        ...state,
+        autoDismiss: true,
       };
     }
 

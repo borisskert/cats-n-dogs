@@ -1,4 +1,7 @@
 <app-message-toaster
+  [messageIds]="messageIds$ | async"
   [messages]="messages$ | async"
   (closeMessage)="closeMessage($event)"
+  (fixMessage)="fixMessage($event)"
+  (unfixMessage)="unfixMessage($event)"
 ></app-message-toaster>

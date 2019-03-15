@@ -1,9 +1,15 @@
 import { Message } from '../models/message.interface';
 
 export interface MessagingState {
-  messages: Message[];
+  messageIds: string[];
+  messages: {
+    [key: string]: Message
+  };
+  autoDismiss: boolean;
 }
 
 export const initialState: MessagingState = {
-  messages: [],
+  messageIds: [],
+  messages: {},
+  autoDismiss: true,
 };
