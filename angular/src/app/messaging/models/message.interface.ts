@@ -9,7 +9,7 @@ export interface Message {
 
 export const newInfo = (text: string): Message => {
   return {
-    text: text,
+    text,
     type: 'info',
     id: cuid(),
     timestamp: new Date(),
@@ -18,7 +18,7 @@ export const newInfo = (text: string): Message => {
 
 export const newWarning = (text: string): Message => {
   return {
-    text: text,
+    text,
     type: 'warning',
     id: cuid(),
     timestamp: new Date(),
@@ -27,7 +27,7 @@ export const newWarning = (text: string): Message => {
 
 export const newError = (text: string): Message => {
   return {
-    text: text,
+    text,
     type: 'error',
     id: cuid(),
     timestamp: new Date(),

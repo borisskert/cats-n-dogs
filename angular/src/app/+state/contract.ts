@@ -5,7 +5,7 @@ import { NavigationState, initialState as navigationInitialState } from '../navi
 export interface State {
   authentication: AuthenticationState;
   messaging: MessagingState;
-  navigation: NavigationState,
+  navigation: NavigationState;
 }
 
 export const initialState: State = {

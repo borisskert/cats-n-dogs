@@ -64,10 +64,10 @@ export class NavigationService {
   };
 
   private readonly RoutesPerNavigationElementType = {
-    'HOME': '/',
-    'USERS': '/users',
-    'CATS': '/cats',
-    'DOGS': '/dogs',
+    HOME: '/',
+    USERS: '/users',
+    CATS: '/cats',
+    DOGS: '/dogs',
   };
 
   constructor(private readonly router: Router) {}
@@ -90,11 +90,11 @@ export class NavigationService {
   public getSelected(): NavigationElementType {
     const pathname = window.location.pathname;
 
-    let navigationElementTypeAsString = Object.keys(this.RoutesPerNavigationElementType)
+    const navigationElementTypeAsString = Object.keys(this.RoutesPerNavigationElementType)
       .find(key => this.RoutesPerNavigationElementType[key] === pathname);
 
     if (navigationElementTypeAsString as NavigationElementType) {
-      return navigationElementTypeAsString as NavigationElementType
+      return navigationElementTypeAsString as NavigationElementType;
     }
   }
 }

@@ -7,14 +7,14 @@ export function reducer(state = initialState, action: NavigationAction): Navigat
       return {
         ...state,
         elements: action.payload.elements,
-      }
+      };
     }
 
     case NavigationActionTypes.SelectNavigationElement: {
       return {
         ...state,
         selectedElementType: action.payload.selected,
-      }
+      };
     }
 
     default:

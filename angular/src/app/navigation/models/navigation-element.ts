@@ -1,4 +1,4 @@
-import { NavigationElementType } from './navigation-element-type'
+import { NavigationElementType } from './navigation-element-type';
 
 export interface NavigationElement {
   text: string;

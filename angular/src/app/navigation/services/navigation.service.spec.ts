@@ -21,7 +21,7 @@ describe('NavigationService', () => {
   });
 
   it('should return navigation elements for admin', () => {
-    let navigationElements = service.navigationFor([ 'moped_admin' ]);
+    const navigationElements = service.navigationFor([ 'moped_admin' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -59,11 +59,11 @@ describe('NavigationService', () => {
         hidden: false,
         order: 4,
       }
-    ])
+    ]);
   });
 
   it('should return navigation elements for user', () => {
-    let navigationElements = service.navigationFor([ 'moped_user' ]);
+    const navigationElements = service.navigationFor([ 'moped_user' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -87,11 +87,11 @@ describe('NavigationService', () => {
         hidden: false,
         order: 4,
       }
-    ])
+    ]);
   });
 
   it('should return navigation elements for admin and user', () => {
-    let navigationElements = service.navigationFor([ 'moped_admin', 'moped_user' ]);
+    const navigationElements = service.navigationFor([ 'moped_admin', 'moped_user' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -129,11 +129,11 @@ describe('NavigationService', () => {
         hidden: false,
         order: 4,
       }
-    ])
+    ]);
   });
 
   it('should return navigation elements for admin and user in opposite order', () => {
-    let navigationElements = service.navigationFor([ 'moped_user', 'moped_admin' ]);
+    const navigationElements = service.navigationFor([ 'moped_user', 'moped_admin' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -171,6 +171,6 @@ describe('NavigationService', () => {
         hidden: false,
         order: 4,
       }
-    ])
+    ]);
   });
 });

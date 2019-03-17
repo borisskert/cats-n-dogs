@@ -5,8 +5,11 @@ import {
   AuthenticationActions,
   AuthenticationActionTypes,
   LoginFailure,
-  LoginSuccessful, LogoutFailure, LogoutSuccessful,
-  TryLogin, TryLogout,
+  LoginSuccessful,
+  LogoutFailure,
+  LogoutSuccessful,
+  TryLogin,
+  TryLogout,
   UserInfoLoadFailure,
   UserInfoLoadSuccessful
 } from './actions';
@@ -14,7 +17,6 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
 import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
-import * as cuid from 'cuid';
 import { InitNavigation, NavigationAction, SelectNavigationElement } from '../../navigation/+state/actions';
 import { NavigationService } from '../../navigation/services/navigation.service';
 import { newWarning } from '../../messaging/models/message.interface';
@@ -77,7 +79,7 @@ export class Effects {
   setupNavigation$: Observable<NavigationAction> = this.actions$.pipe(
     ofType<UserInfoLoadSuccessful>(AuthenticationActionTypes.UserInfoLoadSuccessful),
     map(({ payload }) => {
-      let navigationElements = this.navigationService.navigationFor(payload.roles);
+      const navigationElements = this.navigationService.navigationFor(payload.roles);
       return new InitNavigation({ elements: navigationElements });
     })
   );
@@ -89,5 +91,5 @@ export class Effects {
       new SelectNavigationElement({selected: 'HOME'}),
       new InitNavigation({elements: []}),
     ])
-  )
+  );
 }

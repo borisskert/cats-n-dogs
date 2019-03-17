@@ -36,7 +36,7 @@ export class Effects {
     ofType<DetermineNavigationSelection>(NavigationActionTypes.DetermineNavigationSelection),
     map(() => {
       const selected = this.navigationService.getSelected();
-      return new SelectNavigationElement({ selected: selected });
+      return new SelectNavigationElement({ selected });
     })
   );
 }
