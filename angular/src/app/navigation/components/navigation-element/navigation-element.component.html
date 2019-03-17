@@ -1,0 +1,10 @@
+<button class="navigation-element__button"
+  [ngClass]="[
+    navigationElement.hidden ? 'navigation-element__button--hidden' : '',
+    isSelected ? 'navigation-element__button--active' : '',
+    !navigationElement.enabled ? 'navigation-element__button--disabled' : ''
+  ]"
+  type="button"
+  (click)="onSelect()"
+  [disabled]="isSelected || !navigationElement.enabled"
+>{{navigationElement.text}}</button>

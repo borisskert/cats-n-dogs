@@ -16,6 +16,12 @@ describe('MessageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MessageComponent);
     component = fixture.componentInstance;
+    component.message = {
+      id: 'my id',
+      text: 'my text',
+      type: 'error',
+      timestamp: new Date(),
+    };
     fixture.detectChanges();
   });
 

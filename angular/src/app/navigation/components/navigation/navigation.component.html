@@ -1,0 +1,8 @@
+<div>
+  <app-navigation-element
+    *ngFor="let navigationElement of navigationElements"
+    [navigationElement]="navigationElement"
+    [isSelected]="navigationElement.type === selectedType"
+    (select)="onNavigate(navigationElement.type)"
+  ></app-navigation-element>
+</div>

@@ -11,10 +11,19 @@ import { AppConfig } from './app.config';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MessagingModule } from './messaging/messaging.module';
+import { UsersComponent } from './components/users/users.component';
+import { CatsComponent } from './components/cats/cats.component';
+import { NavigationModule } from './navigation/navigation.module';
+import { HomeComponent } from './components/home/home.component';
+import { DogsComponent } from './components/dogs/dogs.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UsersComponent,
+    CatsComponent,
+    HomeComponent,
+    DogsComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +31,7 @@ import { MessagingModule } from './messaging/messaging.module';
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([ Effects ]),
     AppRoutingModule,
+    NavigationModule,
     AuthenticationModule,
     MessagingModule,
   ],

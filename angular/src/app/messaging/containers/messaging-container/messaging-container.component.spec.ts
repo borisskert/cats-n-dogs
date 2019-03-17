@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { metaReducers, reducers } from '../../../+state/reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { Effects } from '../../../+state/effects';
+import { MessageComponent } from '../../components/message/message.component';
 
 describe('MessagingContainerComponent', () => {
   let component: MessagingContainerComponent;
@@ -18,6 +19,7 @@ describe('MessagingContainerComponent', () => {
         EffectsModule.forRoot([ Effects ]),
       ],
       declarations: [
+        MessageComponent,
         MessagingContainerComponent,
         MessageToasterComponent,
       ]

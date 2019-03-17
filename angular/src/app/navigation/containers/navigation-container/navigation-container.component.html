@@ -1,0 +1,6 @@
+<app-navigation
+  [navigationElements]="navigationElements$ | async"
+  [selectedType]="selectedNavigationType$ | async"
+  (navigate)="onNavigate($event)"
+></app-navigation>
+<app-authentication-container></app-authentication-container>

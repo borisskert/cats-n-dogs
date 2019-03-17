@@ -1,0 +1,15 @@
+.navigation-element__button {
+  color: black;
+}
+
+.navigation-element__button--active {
+  color: red;
+}
+
+.navigation-element__button--disabled {
+  color: grey;
+}
+
+.navigation-element__button--hidden {
+  display: none;
+}

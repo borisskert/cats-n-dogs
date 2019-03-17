@@ -15,6 +15,9 @@ import { LoginService } from '../services/login.service';
 import { UserService } from '../services/user.service';
 import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
 import * as cuid from 'cuid';
+import { InitNavigation, NavigationAction, SelectNavigationElement } from '../../navigation/+state/actions';
+import { NavigationService } from '../../navigation/services/navigation.service';
+import { newWarning } from '../../messaging/models/message.interface';
 
 @Injectable()
 export class Effects {
@@ -23,6 +26,7 @@ export class Effects {
     private readonly actions$: Actions,
     private readonly loginService: LoginService,
     private readonly userService: UserService,
+    private readonly navigationService: NavigationService,
   ) {}
 
   @Effect()
@@ -53,12 +57,7 @@ export class Effects {
   showLoginFailureMessage$: Observable<MessagingAction> = this.actions$.pipe(
     ofType<LoginFailure>(AuthenticationActionTypes.LoginFailure),
     map(() => {
-      return new NewMessage({
-        text: 'Login not successful',
-        type: 'warning',
-        id: cuid(),
-        timestamp: new Date(),
-      });
+      return new NewMessage(newWarning('Login failed'));
     })
   );
 
@@ -73,4 +72,22 @@ export class Effects {
         );
     })
   );
+
+  @Effect()
+  setupNavigation$: Observable<NavigationAction> = this.actions$.pipe(
+    ofType<UserInfoLoadSuccessful>(AuthenticationActionTypes.UserInfoLoadSuccessful),
+    map(({ payload }) => {
+      let navigationElements = this.navigationService.navigationFor(payload.roles);
+      return new InitNavigation({ elements: navigationElements });
+    })
+  );
+
+  @Effect()
+  navigateToHome$: Observable<NavigationAction> = this.actions$.pipe(
+    ofType<LogoutSuccessful>(AuthenticationActionTypes.LogoutSuccessful),
+    switchMap(() => [
+      new SelectNavigationElement({selected: 'HOME'}),
+      new InitNavigation({elements: []}),
+    ])
+  )
 }

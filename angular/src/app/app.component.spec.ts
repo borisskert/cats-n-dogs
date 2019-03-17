@@ -9,6 +9,7 @@ import { Effects } from './+state/effects';
 import { AppConfig } from './app.config';
 import { MockedAppConfig } from './app.config.mock';
 import { MessagingModule } from './messaging/messaging.module';
+import { NavigationModule } from './navigation/navigation.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -17,6 +18,7 @@ describe('AppComponent', () => {
         RouterTestingModule,
         StoreModule.forRoot(reducers, { metaReducers }),
         EffectsModule.forRoot([ Effects ]),
+        NavigationModule,
         AuthenticationModule,
         MessagingModule,
       ],
