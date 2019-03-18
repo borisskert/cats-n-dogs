@@ -25,6 +25,13 @@ export function reducer(state = initialState, action: CatAction): CatState {
       };
     }
 
+    case CatActionType.SelectCat: {
+      return {
+        ...state,
+        selectedCatId: action.payload,
+      };
+    }
+
     default:
       return state;
   }

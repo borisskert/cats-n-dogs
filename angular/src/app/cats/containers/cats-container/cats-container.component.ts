@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../../../+state/contract';
-import { getCats, getCatToCreate } from '../../+state/selectors';
+import { getCats, getCatToCreate, getSelectedCat } from '../../+state/selectors';
 import { Cat } from '../../models/cat';
 import { Observable } from 'rxjs';
-import { CreateCat, SaveCat } from '../../+state/actions';
+import { CreateCat, SaveCat, SelectCat } from '../../+state/actions';
 
 @Component({
   selector: 'app-cats-container',
@@ -15,12 +15,14 @@ export class CatsContainerComponent implements OnInit {
 
   public cats$: Observable<Cat[]>;
   public catToCreate$: Observable<Cat>;
+  public selectedCat$: Observable<Cat>;
 
   constructor(private readonly store: Store<State>) { }
 
   ngOnInit(): void {
     this.cats$ = this.store.select(getCats);
     this.catToCreate$ = this.store.select(getCatToCreate);
+    this.selectedCat$ = this.store.select(getSelectedCat);
   }
 
   onCreateCat(cat: Cat) {
@@ -29,5 +31,9 @@ export class CatsContainerComponent implements OnInit {
 
   onSaveCat(cat: Cat) {
     this.store.dispatch(new SaveCat(cat));
+  }
+
+  onShowDetails(id: string) {
+    this.store.dispatch(new SelectCat(id));
   }
 }

@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { LoginCredentials } from '../../authentication/models/login-credentials.interface';
 import { Cat } from '../models/cat';
 
 export enum CatActionType {
@@ -10,6 +9,7 @@ export enum CatActionType {
   SaveCat = '[Cat] Save Cat',
   SaveCatSuccessful = '[Cat] Save Cat Successful',
   SaveCatFailure = '[Cat] Save Cat Failure',
+  SelectCat = '[Cat] Select Cat',
 }
 
 export type CatAction =
@@ -20,6 +20,7 @@ export type CatAction =
   | SaveCat
   | SaveCatSuccessful
   | SaveCatFailure
+  | SelectCat
   ;
 
 export class LoadCats implements Action {
@@ -51,4 +52,9 @@ export class SaveCatSuccessful implements Action {
 
 export class SaveCatFailure implements Action {
   readonly type = CatActionType.SaveCatFailure;
+}
+
+export class SelectCat implements Action {
+  readonly type = CatActionType.SelectCat;
+  constructor(public payload: string) {}
 }
