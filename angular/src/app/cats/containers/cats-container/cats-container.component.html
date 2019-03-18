@@ -1,0 +1,11 @@
+<app-cat-list *ngIf="!(catToCreate$ | async)"
+  [cats]="cats$ | async"
+  (create)="onCreateCat($event)"
+></app-cat-list>
+
+
+<app-cat-details
+  *ngIf="catToCreate$ | async"
+  [cat]="catToCreate$ | async"
+  (save)="onSaveCat($event)"
+></app-cat-details>
