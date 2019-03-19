@@ -13,7 +13,16 @@ export const getCatToCreate = createSelector(
   state => state.catToCreate,
 );
 
-export const getSelectedCat = createSelector(
+export const getSelectedCatId = createSelector(
   getCatState,
-  state => state.cats[state.selectedCatId],
+  state => state.selectedCatId,
+);
+
+export const getSelectedCat = createSelector([
+    getCatState,
+    getSelectedCatId
+  ],
+  (state, catId) => {
+    return state.cats[catId] || null;
+  },
 );

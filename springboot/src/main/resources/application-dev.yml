@@ -1,3 +1,7 @@
+spring:
+  autoconfigure:
+    exclude: []
+
 application:
   authentication:
     client-id: moped

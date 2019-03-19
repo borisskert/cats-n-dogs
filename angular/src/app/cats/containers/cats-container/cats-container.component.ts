@@ -4,7 +4,15 @@ import { State } from '../../../+state/contract';
 import { getCats, getCatToCreate, getSelectedCat } from '../../+state/selectors';
 import { Cat } from '../../models/cat';
 import { Observable } from 'rxjs';
-import { CreateCat, SaveCat, SelectCat } from '../../+state/actions';
+import {
+  CancelCatCreation,
+  LoadCats,
+  NewCatToCreate,
+  SelectCat,
+  StoreCreatedCat,
+  StoreUpdatedCat,
+  UnselectCat
+} from '../../+state/actions';
 
 @Component({
   selector: 'app-cats-container',
@@ -23,17 +31,31 @@ export class CatsContainerComponent implements OnInit {
     this.cats$ = this.store.select(getCats);
     this.catToCreate$ = this.store.select(getCatToCreate);
     this.selectedCat$ = this.store.select(getSelectedCat);
+
+    this.store.dispatch(new LoadCats());
+  }
+
+  onNewCat(cat: Cat) {
+    this.store.dispatch(new NewCatToCreate(cat));
   }
 
   onCreateCat(cat: Cat) {
-    this.store.dispatch(new CreateCat(cat));
+    this.store.dispatch(new StoreCreatedCat(cat));
   }
 
-  onSaveCat(cat: Cat) {
-    this.store.dispatch(new SaveCat(cat));
+  onUpdateCat(cat: Cat) {
+    this.store.dispatch(new StoreUpdatedCat(cat));
   }
 
   onShowDetails(id: string) {
     this.store.dispatch(new SelectCat(id));
+  }
+
+  cancelCreation() {
+    this.store.dispatch(new CancelCatCreation());
+  }
+
+  leaveCatDetails() {
+    this.store.dispatch(new UnselectCat());
   }
 }

@@ -19,7 +19,7 @@ export class CatDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.catForm = new FormGroup({
-      id: new FormControl({ value: this.cat.id, disabled: true }, Validators.required),
+      id: new FormControl({ value: this.cat.id, disabled: true }),
       name: new FormControl(this.cat.name, [ Validators.required ]),
       race: new FormControl(this.cat.race, [ Validators.required ]),
       age: new FormControl(this.cat.age, [ Validators.required ]),
@@ -29,7 +29,7 @@ export class CatDetailsComponent implements OnInit {
 
   onSubmit() {
     const { id, name, race, age, owner } = this.catForm.getRawValue();
-    this.save.emit({ id, name, race, age, owner, created: this.cat.created });
+    this.save.emit({ id, name, race, age, owner });
   }
 
   onCancel() {

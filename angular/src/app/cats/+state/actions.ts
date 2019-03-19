@@ -6,22 +6,32 @@ export enum CatActionType {
   LoadCats = '[Cat] Load Cats',
   LoadCatsSuccessful = '[Cat] Load Cats Successful',
   LoadCatsFailure = '[Cat] Load Cats Failure',
-  CreateCat = '[Cat] Create Cat',
-  SaveCat = '[Cat] Save Cat',
-  SaveCatSuccessful = '[Cat] Save Cat Successful',
-  SaveCatFailure = '[Cat] Save Cat Failure',
+  NewCatToCreate = '[Cat] New Cat To Create',
+  StoreCreatedCat = '[Cat] Store Created Cat',
+  StoreCreatedCatSuccessful = '[Cat] Store Created Cat Successful',
+  StoreCreatedCatFailure = '[Cat] Store Created Cat Failure',
+  StoreUpdatedCat = '[Cat] Store Updated Cat',
+  StoreUpdatedCatSuccessful = '[Cat] Store Updated Cat Successful',
+  StoreUpdatedCatFailure = '[Cat] Store Updated Cat Failure',
   SelectCat = '[Cat] Select Cat',
+  UnselectCat = '[Cat] Unselect Cat',
+  CancelCatCreation = '[Cat] Cancel Cat Creation',
 }
 
 export type CatAction =
   | LoadCats
   | LoadCatsSuccessful
   | LoadCatsFailure
-  | CreateCat
-  | SaveCat
-  | SaveCatSuccessful
-  | SaveCatFailure
+  | NewCatToCreate
+  | StoreCreatedCat
+  | StoreCreatedCatSuccessful
+  | StoreCreatedCatFailure
+  | StoreUpdatedCat
+  | StoreUpdatedCatSuccessful
+  | StoreUpdatedCatFailure
   | SelectCat
+  | UnselectCat
+  | CancelCatCreation
   ;
 
 export class LoadCats implements Action {
@@ -30,6 +40,7 @@ export class LoadCats implements Action {
 
 export class LoadCatsSuccessful implements Action {
   readonly type = CatActionType.LoadCatsSuccessful;
+
   constructor(public payload: Cats) {}
 }
 
@@ -37,25 +48,52 @@ export class LoadCatsFailure implements Action {
   readonly type = CatActionType.LoadCatsFailure;
 }
 
-export class CreateCat implements Action {
-  readonly type = CatActionType.CreateCat;
+export class NewCatToCreate implements Action {
+  readonly type = CatActionType.NewCatToCreate;
+
   constructor(public payload: Cat) {}
 }
 
-export class SaveCat implements Action {
-  readonly type = CatActionType.SaveCat;
+export class StoreCreatedCat implements Action {
+  readonly type = CatActionType.StoreCreatedCat;
+
   constructor(public payload: Cat) {}
 }
 
-export class SaveCatSuccessful implements Action {
-  readonly type = CatActionType.SaveCatSuccessful;
+export class StoreCreatedCatSuccessful implements Action {
+  readonly type = CatActionType.StoreCreatedCatSuccessful;
 }
 
-export class SaveCatFailure implements Action {
-  readonly type = CatActionType.SaveCatFailure;
+export class StoreCreatedCatFailure implements Action {
+  readonly type = CatActionType.StoreCreatedCatFailure;
+
+  constructor(public payload: { errorMessage: string }) {}
+}
+
+export class StoreUpdatedCat implements Action {
+  readonly type = CatActionType.StoreUpdatedCat;
+
+  constructor(public payload: Cat) {}
+}
+
+export class StoreUpdatedCatSuccessful implements Action {
+  readonly type = CatActionType.StoreUpdatedCatSuccessful;
+}
+
+export class StoreUpdatedCatFailure implements Action {
+  readonly type = CatActionType.StoreUpdatedCatFailure;
 }
 
 export class SelectCat implements Action {
   readonly type = CatActionType.SelectCat;
+
   constructor(public payload: string) {}
+}
+
+export class UnselectCat implements Action {
+  readonly type = CatActionType.UnselectCat;
+}
+
+export class CancelCatCreation implements Action {
+  readonly type = CatActionType.CancelCatCreation;
 }

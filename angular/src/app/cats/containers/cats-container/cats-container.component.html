@@ -1,6 +1,6 @@
 <app-cat-list *ngIf="!(catToCreate$ | async)"
   [cats]="cats$ | async"
-  (create)="onCreateCat($event)"
+  (create)="onNewCat($event)"
   (showDetails)="onShowDetails($event)"
 ></app-cat-list>
 
@@ -8,12 +8,16 @@
 <app-cat-details
   *ngIf="catToCreate$ | async"
   [cat]="catToCreate$ | async"
-  (save)="onSaveCat($event)"
+  (save)="onCreateCat($event)"
+  (cancel)="cancelCreation()"
 ></app-cat-details>
 
 
 <app-cat-details
   *ngIf="selectedCat$ | async"
   [cat]="selectedCat$ | async"
-  (save)="onSaveCat($event)"
+  (save)="onUpdateCat($event)"
+  (cancel)="leaveCatDetails()"
 ></app-cat-details>
+
+{{selectedCat$ | async}}

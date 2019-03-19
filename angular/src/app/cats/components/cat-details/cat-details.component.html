@@ -1,7 +1,6 @@
 <form [formGroup]="catForm" (ngSubmit)="catForm.valid && onSubmit()">
   <div>
-    <label for="id">Id:</label>
-    <input id="id" formControlName="id">
+    <input id="id" formControlName="id" type="hidden">
   </div>
 
   <div>
