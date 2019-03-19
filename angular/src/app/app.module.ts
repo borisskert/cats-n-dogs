@@ -16,6 +16,8 @@ import { CatsComponent } from './components/cats/cats.component';
 import { NavigationModule } from './navigation/navigation.module';
 import { HomeComponent } from './components/home/home.component';
 import { DogsComponent } from './components/dogs/dogs.component';
+import { CatsModule } from './cats/cats.module';
+import { AppStateModule } from './app-state.module';
 
 @NgModule({
   declarations: [
@@ -28,12 +30,12 @@ import { DogsComponent } from './components/dogs/dogs.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([ Effects ]),
+    AppStateModule,
     AppRoutingModule,
     NavigationModule,
     AuthenticationModule,
     MessagingModule,
+    CatsModule,
   ],
   providers: [
     AppConfig, {

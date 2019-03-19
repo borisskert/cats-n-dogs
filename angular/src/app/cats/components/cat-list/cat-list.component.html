@@ -1,0 +1,15 @@
+<div>
+  <ng-container *ngIf="cats.length > 0">
+    <app-cat-list-item
+      *ngFor="let cat of cats"
+      [cat]="cat"
+      (showDetails)="onShowDetails($event)"
+    ></app-cat-list-item>
+  </ng-container>
+
+  <ng-container *ngIf="cats.length < 1">
+    <div>😿 No cats saved. 😿</div>
+  </ng-container>
+
+  <button type="button" (click)="onCreate()">Create cat</button>
+</div>

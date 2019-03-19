@@ -1,0 +1,23 @@
+<app-cat-list *ngIf="!(catToCreate$ | async)"
+  [cats]="cats$ | async"
+  (create)="onNewCat($event)"
+  (showDetails)="onShowDetails($event)"
+></app-cat-list>
+
+
+<app-cat-details
+  *ngIf="catToCreate$ | async"
+  [cat]="catToCreate$ | async"
+  (save)="onCreateCat($event)"
+  (cancel)="cancelCreation()"
+></app-cat-details>
+
+
+<app-cat-details
+  *ngIf="selectedCat$ | async"
+  [cat]="selectedCat$ | async"
+  (save)="onUpdateCat($event)"
+  (cancel)="leaveCatDetails()"
+></app-cat-details>
+
+{{selectedCat$ | async}}

@@ -1,0 +1,33 @@
+<form [formGroup]="catForm" (ngSubmit)="catForm.valid && onSubmit()">
+  <div>
+    <input id="id" formControlName="id" type="hidden">
+  </div>
+
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name">
+  </div>
+
+  <div>
+    <label for="race">Race:</label>
+    <input id="race" formControlName="race">
+  </div>
+
+  <div>
+    <label for="age">Age:</label>
+    <input id="age" formControlName="age">
+  </div>
+
+  <div>
+    <label for="owner">Owner:</label>
+    <input id="owner" formControlName="owner">
+  </div>
+
+  <p *ngIf="catForm.invalid">Check your inputs.</p>
+
+  <div>
+    <button type="submit">Save</button>
+  </div>
+</form>
+
+<button type="button" (click)="onCancel()">Cancel</button>
