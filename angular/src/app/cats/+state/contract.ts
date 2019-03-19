@@ -1,13 +1,14 @@
 import { Cat } from '../models/cat';
+import { Cats } from '../models/cats';
 
 export interface CatState {
-  cats: Cat[];
+  cats: Cats;
   catToCreate: Cat;
   selectedCatId: string;
 }
 
 export const initialState: CatState = {
-  cats: [],
+  cats: {},
   catToCreate: null,
   selectedCatId: null,
 };

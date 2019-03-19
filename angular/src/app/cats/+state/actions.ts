@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Cat } from '../models/cat';
+import { Cats } from '../models/cats';
 
 export enum CatActionType {
   LoadCats = '[Cat] Load Cats',
@@ -29,7 +30,7 @@ export class LoadCats implements Action {
 
 export class LoadCatsSuccessful implements Action {
   readonly type = CatActionType.LoadCatsSuccessful;
-  constructor(public payload: Cat[]) {}
+  constructor(public payload: Cats) {}
 }
 
 export class LoadCatsFailure implements Action {

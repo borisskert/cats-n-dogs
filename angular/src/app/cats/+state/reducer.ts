@@ -22,6 +22,7 @@ export function reducer(state = initialState, action: CatAction): CatState {
       return {
         ...state,
         catToCreate: null,
+        selectedCatId: null,
       };
     }
 

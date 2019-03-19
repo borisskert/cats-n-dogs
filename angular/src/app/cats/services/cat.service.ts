@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Cat } from '../models/cat';
-import { EMPTY, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { Cats } from '../models/cats';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CatService {
 
-  private cats: Cat[] = [];
+  private cats: Cats = {};
 
   constructor() { }
 
-  public loadCats(): Observable<Cat[]> {
-    return of([ ...this.cats ]);
+  public loadCats(): Observable<Cats> {
+    return of({ ...this.cats });
   }
 
   public saveCat(cat: Cat): Observable<void> {
-    this.cats.push(cat);
+    this.cats[cat.id] = cat;
     return of(null);
   }
 }

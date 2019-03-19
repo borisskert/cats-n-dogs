@@ -5,7 +5,7 @@ const getCatState = createFeatureSelector<CatState>('cat');
 
 export const getCats = createSelector(
   getCatState,
-  state => state.cats,
+  state => Object.values(state.cats),
 );
 
 export const getCatToCreate = createSelector(
@@ -15,5 +15,5 @@ export const getCatToCreate = createSelector(
 
 export const getSelectedCat = createSelector(
   getCatState,
-  state => state.cats.find(cat => cat.id === state.selectedCatId),
+  state => state.cats[state.selectedCatId],
 );
