@@ -4,6 +4,7 @@
       *ngFor="let cat of cats"
       [cat]="cat"
       (showDetails)="onShowDetails($event)"
+      (delete)="onDelete($event)"
     ></app-cat-list-item>
   </ng-container>
 

@@ -16,6 +16,9 @@ export enum CatActionType {
   SelectCat = '[Cat] Select Cat',
   UnselectCat = '[Cat] Unselect Cat',
   CancelCatCreation = '[Cat] Cancel Cat Creation',
+  DeleteCat = '[Cat] Delete Cat',
+  DeleteCatSuccessful = '[Cat] Delete Cat Successful',
+  DeleteCatFailure = '[Cat] Delete Failure',
 }
 
 export type CatAction =
@@ -32,6 +35,9 @@ export type CatAction =
   | SelectCat
   | UnselectCat
   | CancelCatCreation
+  | DeleteCat
+  | DeleteCatSuccessful
+  | DeleteCatFailure
   ;
 
 export class LoadCats implements Action {
@@ -96,4 +102,17 @@ export class UnselectCat implements Action {
 
 export class CancelCatCreation implements Action {
   readonly type = CatActionType.CancelCatCreation;
+}
+
+export class DeleteCat implements Action {
+  readonly type = CatActionType.DeleteCat;
+  constructor(public payload: string) {}
+}
+
+export class DeleteCatSuccessful implements Action {
+  readonly type = CatActionType.DeleteCatSuccessful;
+}
+
+export class DeleteCatFailure implements Action {
+  readonly type = CatActionType.DeleteCatFailure;
 }

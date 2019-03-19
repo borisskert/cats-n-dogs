@@ -5,7 +5,7 @@ import { getCats, getCatToCreate, getSelectedCat } from '../../+state/selectors'
 import { Cat } from '../../models/cat';
 import { Observable } from 'rxjs';
 import {
-  CancelCatCreation,
+  CancelCatCreation, DeleteCat,
   LoadCats,
   NewCatToCreate,
   SelectCat,
@@ -57,5 +57,9 @@ export class CatsContainerComponent implements OnInit {
 
   leaveCatDetails() {
     this.store.dispatch(new UnselectCat());
+  }
+
+  onDelete(id: string) {
+    this.store.dispatch(new DeleteCat(id));
   }
 }

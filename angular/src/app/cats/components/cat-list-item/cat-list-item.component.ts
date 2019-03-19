@@ -10,6 +10,7 @@ export class CatListItemComponent implements OnInit {
 
   @Input() cat: Cat;
   @Output() showDetails = new EventEmitter<string>();
+  @Output() delete = new EventEmitter<string>();
 
   constructor() { }
 
@@ -18,5 +19,9 @@ export class CatListItemComponent implements OnInit {
 
   onShowDetails() {
     this.showDetails.emit(this.cat.id);
+  }
+
+  onDelete() {
+    this.delete.emit(this.cat.id);
   }
 }
