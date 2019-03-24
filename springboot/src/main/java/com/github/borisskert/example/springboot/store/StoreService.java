@@ -1,5 +1,6 @@
 package com.github.borisskert.example.springboot.store;
 
+import com.github.borisskert.example.springboot.state.StateService;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
@@ -21,10 +22,12 @@ public class StoreService {
     private static final String CUSTOM_ID_PROPERTY_NAME = "id";
 
     private final MongoTemplate mongoTemplate;
+    private final StateService stateService;
 
     @Autowired
-    public StoreService(MongoTemplate mongoTemplate) {
+    public StoreService(MongoTemplate mongoTemplate, StateService stateService) {
         this.mongoTemplate = mongoTemplate;
+        this.stateService = stateService;
     }
 
     public Map<String, Document> findAll(final String collectionName) {
@@ -57,6 +60,8 @@ public class StoreService {
                         .append(CUSTOM_ID_PROPERTY_NAME, idAsHexString)
         );
 
+        stateService.create(collectionName, idAsHexString);
+
         return idAsHexString;
     }
 
@@ -67,11 +72,15 @@ public class StoreService {
         if (!updateResult.wasAcknowledged() || updateResult.getMatchedCount() < 1) {
             throw new RuntimeException();
         }
+
+        stateService.update(collectionName, id);
     }
 
     public void delete(final String collectionName, final String id) {
         MongoCollection<Document> collection = getCollection(collectionName);
         collection.deleteOne(idFilter(id));
+
+        stateService.delete(collectionName, id);
     }
 
     private MongoCollection<Document> getCollection(String collectionName) {
