@@ -34,7 +34,7 @@ export class Effects {
     ofType(
       AppActionType.LoadLatestStateVersion,
       CatActionType.CreateCatSuccessful,
-      CatActionType.StoreUpdatedCatSuccessful,
+      CatActionType.UpdatedCatSuccessful,
       StoreActionType.DeleteItemSuccessful,
     ),
     switchMap(() => {

@@ -32,7 +32,7 @@ export class StoreService {
     );
   }
 
-  public createItem(store: string, value: any): Observable<string> {
+  public createItem<T>(store: string, value: T): Observable<string> {
     return this.httpClient.post(
       `${this.appConfig.getValue('NG_BACKEND_URL')}/store/${store}`,
       value,
@@ -40,6 +40,18 @@ export class StoreService {
         withCredentials: true,
         responseType: 'text',
       }
+    );
+  }
+
+  public updateItem<T>(store: string, id: string, value: T): Observable<void> {
+    return this.httpClient.put<void>(
+      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/${store}/${id}`,
+      value,
+      {
+        withCredentials: true
+      }
+    ).pipe(
+      map(() => null)
     );
   }
 

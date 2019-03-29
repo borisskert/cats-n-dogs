@@ -17,6 +17,9 @@ import {
   LoadStoreSuccessful,
   StoreAction,
   StoreActionType,
+  UpdateItem,
+  UpdateItemFailure,
+  UpdateItemSuccessful,
 } from './actions';
 import { StoreService } from '../services/store.service';
 import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
@@ -62,6 +65,18 @@ export class Effects {
         .pipe(
           map(() => new CreateItemSuccessful({ store: payload.store })),
           catchError((e) => of(new CreateItemFailure(e.text)))
+        );
+    })
+  );
+
+  @Effect()
+  updateItem: Observable<StoreAction> = this.actions$.pipe(
+    ofType<UpdateItem>(StoreActionType.UpdateItem),
+    switchMap(({ payload }) => {
+      return this.storeService.updateItem(payload.store, payload.id, payload.value)
+        .pipe(
+          map(() => new UpdateItemSuccessful({ store: payload.store })),
+          catchError((e) => of(new UpdateItemFailure(e.text)))
         );
     })
   );

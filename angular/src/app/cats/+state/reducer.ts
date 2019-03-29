@@ -19,7 +19,7 @@ export function reducer(state = initialState, action: CatAction): CatState {
       };
     }
 
-    case CatActionType.StoreUpdatedCatSuccessful: {
+    case CatActionType.UpdatedCatSuccessful: {
       return {
         ...state,
         selectedCatId: null,
