@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CatListComponent } from './cat-list.component';
+import { CatListItemComponent } from '../cat-list-item/cat-list-item.component';
+import { getCats, getCatsArray } from '../../cats.mock';
 
 describe('CatListComponent', () => {
   let component: CatListComponent;
@@ -8,7 +10,10 @@ describe('CatListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CatListComponent ]
+      declarations: [
+        CatListItemComponent,
+        CatListComponent,
+      ]
     })
     .compileComponents();
   }));
@@ -16,6 +21,7 @@ describe('CatListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CatListComponent);
     component = fixture.componentInstance;
+    component.cats = getCatsArray();
     fixture.detectChanges();
   });
 

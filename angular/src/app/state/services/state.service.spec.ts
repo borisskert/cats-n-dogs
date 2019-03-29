@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CatService } from './cat.service';
+import { StateService } from './state.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppConfig } from '../../app.config';
 import { MockedAppConfig } from '../../app.config.mock';
 
-describe('CatService', () => {
+describe('StateService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [ HttpClientTestingModule ],
     providers: [
@@ -17,7 +17,7 @@ describe('CatService', () => {
   }));
 
   it('should be created', () => {
-    const service: CatService = TestBed.get(CatService);
+    const service: StateService = TestBed.get(StateService);
     expect(service).toBeTruthy();
   });
 });

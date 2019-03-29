@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Cat } from '../models/cat';
 import { Cats } from '../models/cats';
+import { computeStyle } from '@angular/animations/browser/src/util';
 
 export enum CatActionType {
   LoadCats = '[Cat] Load Cats',
@@ -19,6 +20,10 @@ export enum CatActionType {
   DeleteCat = '[Cat] Delete Cat',
   DeleteCatSuccessful = '[Cat] Delete Cat Successful',
   DeleteCatFailure = '[Cat] Delete Failure',
+  LoadCatFromStore = '[Cat] Load Cat From Store',
+  LoadCatFromStoreSuccessful = '[Cat] Load Cat From Store Successful',
+  LoadCatFromStoreFailure = '[Cat] Load Cat From Store Failure',
+  DeleteCatFromStore = '[Cat] Delete Cat From Store',
 }
 
 export type CatAction =
@@ -38,6 +43,10 @@ export type CatAction =
   | DeleteCat
   | DeleteCatSuccessful
   | DeleteCatFailure
+  | LoadCatFromStore
+  | LoadCatFromStoreSuccessful
+  | LoadCatFromStoreFailure
+  | DeleteCatFromStore
   ;
 
 export class LoadCats implements Action {
@@ -115,4 +124,23 @@ export class DeleteCatSuccessful implements Action {
 
 export class DeleteCatFailure implements Action {
   readonly type = CatActionType.DeleteCatFailure;
+}
+
+export class LoadCatFromStore implements Action {
+  readonly type = CatActionType.LoadCatFromStore;
+  constructor(public payload: string) {}
+}
+
+export class LoadCatFromStoreSuccessful implements Action {
+  readonly type = CatActionType.LoadCatFromStoreSuccessful;
+  constructor(public payload: Cat) {}
+}
+
+export class LoadCatFromStoreFailure implements Action {
+  readonly type = CatActionType.LoadCatFromStoreFailure;
+}
+
+export class DeleteCatFromStore implements Action {
+  readonly type = CatActionType.DeleteCatFromStore;
+  constructor(public payload: string) {}
 }

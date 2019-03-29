@@ -1,6 +1,5 @@
 package com.github.borisskert.example.springboot.state;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -8,7 +7,6 @@ import java.time.LocalDateTime;
 @Document
 public class State {
 
-//    private ObjectId _id;
     private String _id;
     private Action action;
     private LocalDateTime timestamp;
@@ -16,10 +14,6 @@ public class State {
     public String getId() {
         return _id;
     }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
 
     public Action getAction() {
         return action;

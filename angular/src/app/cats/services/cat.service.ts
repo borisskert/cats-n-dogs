@@ -58,4 +58,13 @@ export class CatService {
       map(() => null)
     );
   }
+
+  public loadCat(id: string) {
+    return this.httpClient.get<Cat>(
+      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat/${id}`,
+      {
+        withCredentials: true
+      }
+    );
+  }
 }

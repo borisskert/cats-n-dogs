@@ -4,7 +4,13 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   CatAction,
-  CatActionType, DeleteCat, DeleteCatFailure, DeleteCatSuccessful,
+  CatActionType,
+  DeleteCat,
+  DeleteCatFailure,
+  DeleteCatSuccessful,
+  LoadCatFromStore,
+  LoadCatFromStoreFailure,
+  LoadCatFromStoreSuccessful,
   LoadCats,
   LoadCatsFailure,
   LoadCatsSuccessful,
@@ -29,12 +35,7 @@ export class Effects {
 
   @Effect()
   loadCats$: Observable<CatAction> = this.actions$.pipe(
-    ofType<LoadCats>(
-      CatActionType.LoadCats,
-      CatActionType.StoreCreatedCatSuccessful,
-      CatActionType.StoreUpdatedCatSuccessful,
-      CatActionType.DeleteCatSuccessful,
-    ),
+    ofType<LoadCats>(CatActionType.LoadCats),
     switchMap(() => {
       return this.catService.loadCats()
         .pipe(
@@ -82,6 +83,18 @@ export class Effects {
         .pipe(
           map(() => new DeleteCatSuccessful()),
           catchError(() => of(new DeleteCatFailure()))
+        );
+    })
+  );
+
+  @Effect()
+  loadCat$: Observable<CatAction> = this.actions$.pipe(
+    ofType<LoadCatFromStore>(CatActionType.LoadCatFromStore),
+    switchMap(({ payload }) => {
+      return this.catService.loadCat(payload)
+        .pipe(
+          map((cat) => new LoadCatFromStoreSuccessful(cat)),
+          catchError(() => of(new LoadCatFromStoreFailure()))
         );
     })
   );

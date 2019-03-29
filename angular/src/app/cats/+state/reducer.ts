@@ -1,5 +1,6 @@
 import { CatState, initialState } from './contract';
 import { CatAction, CatActionType } from './actions';
+import { filter } from '../../common/object-utils';
 
 export function reducer(state = initialState, action: CatAction): CatState {
 
@@ -51,6 +52,25 @@ export function reducer(state = initialState, action: CatAction): CatState {
       return {
         ...state,
         catToCreate: null,
+      };
+    }
+
+    case CatActionType.LoadCatFromStoreSuccessful: {
+      return {
+        ...state,
+        cats: {
+          ...state.cats,
+          [action.payload.id]: action.payload
+        }
+      };
+    }
+
+    case CatActionType.DeleteCatFromStore: {
+      return {
+        ...state,
+        cats: filter({
+          ...state.cats
+        }, id => id !== action.payload)
       };
     }
 
