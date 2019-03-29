@@ -14,7 +14,7 @@ import { HomeComponent } from './components/home/home.component';
 import { DogsComponent } from './components/dogs/dogs.component';
 import { CatsModule } from './cats/cats.module';
 import { AppStateModule } from './app-state.module';
-import { StateModule } from './state/state.module';
+import { StateModule } from './version/state.module';
 
 @NgModule({
   declarations: [

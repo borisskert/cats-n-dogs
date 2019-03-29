@@ -4,7 +4,7 @@ import { reducer as authenticationReducer } from '../authentication/+state/reduc
 import { reducer as messagingReducer } from '../messaging/+state/reducer';
 import { reducer as navigationReducer } from '../navigation/+state/reducer';
 import { reducer as catReducer } from '../cats/+state/reducer';
-import { reducer as appStateReducer } from '../state/+state/reducer';
+import { reducer as appStateReducer } from '../version/+state/reducer';
 import { State } from './contract';
 
 export const reducers: ActionReducerMap<State> = {

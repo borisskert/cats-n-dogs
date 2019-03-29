@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AppState } from './contract';
+import { VersionState } from './contract';
 
-const getAppState = createFeatureSelector<AppState>('state');
+const getAppState = createFeatureSelector<VersionState>('state');
 
 export const getVersion = createSelector(
   getAppState,
