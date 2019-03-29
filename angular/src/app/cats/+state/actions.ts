@@ -3,9 +3,7 @@ import { Cat } from '../models/cat';
 
 export enum CatActionType {
   NewCatToCreate = '[Cat] New Cat To Create',
-  StoreCreatedCat = '[Cat] Store Created Cat',
-  StoreCreatedCatSuccessful = '[Cat] Store Created Cat Successful',
-  StoreCreatedCatFailure = '[Cat] Store Created Cat Failure',
+  CreateCatSuccessful = '[Cat] Create Cat Successful',
   StoreUpdatedCat = '[Cat] Store Updated Cat',
   StoreUpdatedCatSuccessful = '[Cat] Store Updated Cat Successful',
   StoreUpdatedCatFailure = '[Cat] Store Updated Cat Failure',
@@ -16,9 +14,7 @@ export enum CatActionType {
 
 export type CatAction =
   | NewCatToCreate
-  | StoreCreatedCat
-  | StoreCreatedCatSuccessful
-  | StoreCreatedCatFailure
+  | CreateCatSuccessful
   | StoreUpdatedCat
   | StoreUpdatedCatSuccessful
   | StoreUpdatedCatFailure
@@ -33,20 +29,8 @@ export class NewCatToCreate implements Action {
   constructor(public payload: Cat) {}
 }
 
-export class StoreCreatedCat implements Action {
-  readonly type = CatActionType.StoreCreatedCat;
-
-  constructor(public payload: Cat) {}
-}
-
-export class StoreCreatedCatSuccessful implements Action {
-  readonly type = CatActionType.StoreCreatedCatSuccessful;
-}
-
-export class StoreCreatedCatFailure implements Action {
-  readonly type = CatActionType.StoreCreatedCatFailure;
-
-  constructor(public payload: { errorMessage: string }) {}
+export class CreateCatSuccessful implements Action {
+  readonly type = CatActionType.CreateCatSuccessful;
 }
 
 export class StoreUpdatedCat implements Action {

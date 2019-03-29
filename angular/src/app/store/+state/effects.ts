@@ -3,15 +3,24 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import {
-  DeleteItem, DeleteItemFailure, DeleteItemSuccessful,
+  CreateItem,
+  CreateItemFailure,
+  CreateItemSuccessful,
+  DeleteItem,
+  DeleteItemFailure,
+  DeleteItemSuccessful,
   LoadFromStore,
   LoadFromStoreFailure,
-  LoadFromStoreSuccessful, LoadStore, LoadStoreFailure, LoadStoreSuccessful,
+  LoadFromStoreSuccessful,
+  LoadStore,
+  LoadStoreFailure,
+  LoadStoreSuccessful,
   StoreAction,
   StoreActionType,
 } from './actions';
 import { StoreService } from '../services/store.service';
-import { CatAction, CatActionType } from '../../cats/+state/actions';
+import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
+import { newError } from '../../messaging/models/message.interface';
 
 @Injectable()
 export class Effects {
@@ -45,6 +54,23 @@ export class Effects {
     })
   );
 
+  @Effect()
+  createItem$: Observable<StoreAction> = this.actions$.pipe(
+    ofType<CreateItem>(StoreActionType.CreateItem),
+    switchMap(({ payload }) => {
+      return this.storeService.createItem(payload.store, payload.value)
+        .pipe(
+          map(() => new CreateItemSuccessful({ store: payload.store })),
+          catchError((e) => of(new CreateItemFailure(e.text)))
+        );
+    })
+  );
+
+  @Effect()
+  errorMessageForItemCreationFailure$: Observable<MessagingAction> = this.actions$.pipe(
+    ofType<CreateItemFailure>(StoreActionType.CreateItemFailure),
+    map(({ payload }) => new NewMessage(newError(payload.errorMessage)))
+  );
 
   @Effect()
   delete$: Observable<StoreAction> = this.actions$.pipe(

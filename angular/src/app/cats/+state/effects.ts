@@ -5,16 +5,13 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   CatAction,
   CatActionType,
-  StoreCreatedCat,
-  StoreCreatedCatFailure,
-  StoreCreatedCatSuccessful,
+  CreateCatSuccessful,
   StoreUpdatedCat,
   StoreUpdatedCatFailure,
   StoreUpdatedCatSuccessful
 } from './actions';
 import { CatService } from '../services/cat.service';
-import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
-import { newError } from '../../messaging/models/message.interface';
+import { CreateItemSuccessful, StoreActionType } from '../../store/+state/actions';
 
 @Injectable()
 export class Effects {
@@ -25,14 +22,12 @@ export class Effects {
   ) {}
 
   @Effect()
-  createCat$: Observable<CatAction> = this.actions$.pipe(
-    ofType<StoreCreatedCat>(CatActionType.StoreCreatedCat),
+  catCreated: Observable<CatAction> = this.actions$.pipe(
+    ofType<CreateItemSuccessful>(StoreActionType.CreateItemSuccessful),
     switchMap(({ payload }) => {
-      return this.catService.createCat(payload)
-        .pipe(
-          map(() => new StoreCreatedCatSuccessful()),
-          catchError((e) => of(new StoreCreatedCatFailure(e.text)))
-        );
+      if (payload.store === 'cat') {
+        return [ new CreateCatSuccessful() ];
+      }
     })
   );
 
@@ -46,11 +41,5 @@ export class Effects {
           catchError(() => of(new StoreUpdatedCatFailure()))
         );
     })
-  );
-
-  @Effect()
-  postCreationFailedErrorMessage$: Observable<MessagingAction> = this.actions$.pipe(
-    ofType<StoreCreatedCatFailure>(CatActionType.StoreCreatedCatFailure),
-    map(({ payload }) => new NewMessage(newError(payload.errorMessage)))
   );
 }

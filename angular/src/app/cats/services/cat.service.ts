@@ -15,17 +15,6 @@ export class CatService {
     private readonly appConfig: AppConfig,
   ) { }
 
-  public createCat(cat: Cat): Observable<string> {
-    return this.httpClient.post(
-      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat`,
-      cat,
-      {
-        withCredentials: true,
-        responseType: 'text',
-      }
-    );
-  }
-
   public updateCat(cat: Cat): Observable<void> {
     return this.httpClient.put<void>(
       `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat/${cat.id}`,

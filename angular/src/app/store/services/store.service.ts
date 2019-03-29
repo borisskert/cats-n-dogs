@@ -32,6 +32,17 @@ export class StoreService {
     );
   }
 
+  public createItem(store: string, value: any): Observable<string> {
+    return this.httpClient.post(
+      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/${store}`,
+      value,
+      {
+        withCredentials: true,
+        responseType: 'text',
+      }
+    );
+  }
+
   public deleteItem(store: string, id: string): Observable<void> {
     return this.httpClient.delete<void>(
       `${this.appConfig.getValue('NG_BACKEND_URL')}/store/${store}/${id}`,

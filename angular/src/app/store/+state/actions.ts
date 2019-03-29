@@ -1,4 +1,6 @@
 import { Action } from '@ngrx/store';
+import { Cat } from '../../cats/models/cat';
+import { CatActionType } from '../../cats/+state/actions';
 
 export enum StoreActionType {
   LoadStore = '[Store] Load Store',
@@ -7,6 +9,9 @@ export enum StoreActionType {
   LoadFromStore = '[Store] Load From Store',
   LoadFromStoreSuccessful = '[Store] Load From Store Successful',
   LoadFromStoreFailure = '[Store] Load From Store Failure',
+  CreateItem = '[Store] Create Item',
+  CreateItemSuccessful = '[Store] Create Item Successful',
+  CreateItemFailure = '[Store] Create Item Failure',
   DeleteItem = '[Store] Delete Item',
   DeleteItemSuccessful = '[Store] Delete Item Successful',
   DeleteItemFailure = '[Store] Delete Item Failure',
@@ -20,6 +25,9 @@ export type StoreAction =
   | LoadFromStore
   | LoadFromStoreSuccessful
   | LoadFromStoreFailure
+  | CreateItem
+  | CreateItemSuccessful
+  | CreateItemFailure
   | DeleteItem
   | DeleteItemSuccessful
   | DeleteItemFailure
@@ -56,6 +64,23 @@ export class LoadFromStoreSuccessful implements Action {
 
 export class LoadFromStoreFailure implements Action {
   readonly type = StoreActionType.LoadFromStoreFailure;
+}
+
+export class CreateItem implements Action {
+  readonly type = StoreActionType.CreateItem;
+
+  constructor(public payload: { store: string, value: any }) {}
+}
+
+export class CreateItemSuccessful implements Action {
+  readonly type = StoreActionType.CreateItemSuccessful;
+  constructor(public payload: { store: string }) {}
+}
+
+export class CreateItemFailure implements Action {
+  readonly type = StoreActionType.CreateItemFailure;
+
+  constructor(public payload: { errorMessage: string }) {}
 }
 
 export class DeleteItem implements Action {

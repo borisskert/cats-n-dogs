@@ -33,7 +33,7 @@ export class Effects {
   loadLatestStateVersion$: Observable<AppAction> = this.actions$.pipe(
     ofType(
       AppActionType.LoadLatestStateVersion,
-      CatActionType.StoreCreatedCatSuccessful,
+      CatActionType.CreateCatSuccessful,
       CatActionType.StoreUpdatedCatSuccessful,
       StoreActionType.DeleteItemSuccessful,
     ),
