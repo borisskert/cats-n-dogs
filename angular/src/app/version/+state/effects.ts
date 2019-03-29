@@ -18,7 +18,7 @@ import { CatActionType } from '../../cats/+state/actions';
 import { flatMap, groupBy } from '../../common/array-utils';
 import { StateVersion } from '../../models/state';
 import { compareAsc } from 'date-fns';
-import { DeleteFromStore, LoadFromStore } from '../../store/+state/actions';
+import { DeleteFromStore, LoadFromStore, StoreActionType } from '../../store/+state/actions';
 
 
 @Injectable()
@@ -35,7 +35,7 @@ export class Effects {
       AppActionType.LoadLatestStateVersion,
       CatActionType.StoreCreatedCatSuccessful,
       CatActionType.StoreUpdatedCatSuccessful,
-      CatActionType.DeleteCatSuccessful
+      StoreActionType.DeleteItemSuccessful,
     ),
     switchMap(() => {
       return this.stateService.getLatestVersion()

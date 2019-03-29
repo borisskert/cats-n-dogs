@@ -5,9 +5,6 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import {
   CatAction,
   CatActionType,
-  DeleteCat,
-  DeleteCatFailure,
-  DeleteCatSuccessful,
   StoreCreatedCat,
   StoreCreatedCatFailure,
   StoreCreatedCatSuccessful,
@@ -55,17 +52,5 @@ export class Effects {
   postCreationFailedErrorMessage$: Observable<MessagingAction> = this.actions$.pipe(
     ofType<StoreCreatedCatFailure>(CatActionType.StoreCreatedCatFailure),
     map(({ payload }) => new NewMessage(newError(payload.errorMessage)))
-  );
-
-  @Effect()
-  deleteCat$: Observable<CatAction> = this.actions$.pipe(
-    ofType<DeleteCat>(CatActionType.DeleteCat),
-    switchMap(({ payload }) => {
-      return this.catService.deleteCat(payload)
-        .pipe(
-          map(() => new DeleteCatSuccessful()),
-          catchError(() => of(new DeleteCatFailure()))
-        );
-    })
   );
 }

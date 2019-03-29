@@ -6,14 +6,13 @@ import { Cat } from '../../models/cat';
 import { Observable } from 'rxjs';
 import {
   CancelCatCreation,
-  DeleteCat,
   NewCatToCreate,
   SelectCat,
   StoreCreatedCat,
   StoreUpdatedCat,
   UnselectCat
 } from '../../+state/actions';
-import { LoadStore } from '../../../store/+state/actions';
+import { DeleteItem, LoadStore } from '../../../store/+state/actions';
 
 @Component({
   selector: 'app-cats-container',
@@ -61,6 +60,6 @@ export class CatsContainerComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    this.store.dispatch(new DeleteCat(id));
+    this.store.dispatch(new DeleteItem({ store: 'cat', id }));
   }
 }

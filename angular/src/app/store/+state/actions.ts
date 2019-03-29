@@ -7,6 +7,9 @@ export enum StoreActionType {
   LoadFromStore = '[Store] Load From Store',
   LoadFromStoreSuccessful = '[Store] Load From Store Successful',
   LoadFromStoreFailure = '[Store] Load From Store Failure',
+  DeleteItem = '[Store] Delete Item',
+  DeleteItemSuccessful = '[Store] Delete Item Successful',
+  DeleteItemFailure = '[Store] Delete Item Failure',
   DeleteFromStore = '[Store] Delete From Store',
 }
 
@@ -17,16 +20,21 @@ export type StoreAction =
   | LoadFromStore
   | LoadFromStoreSuccessful
   | LoadFromStoreFailure
+  | DeleteItem
+  | DeleteItemSuccessful
+  | DeleteItemFailure
   | DeleteFromStore
   ;
 
 export class LoadStore implements Action {
   readonly type = StoreActionType.LoadStore;
+
   constructor(public payload: { store: string }) {}
 }
 
 export class LoadStoreSuccessful implements Action {
   readonly type = StoreActionType.LoadStoreSuccessful;
+
   constructor(public payload: { store: string, value: any }) {}
 }
 
@@ -48,6 +56,20 @@ export class LoadFromStoreSuccessful implements Action {
 
 export class LoadFromStoreFailure implements Action {
   readonly type = StoreActionType.LoadFromStoreFailure;
+}
+
+export class DeleteItem implements Action {
+  readonly type = StoreActionType.DeleteItem;
+
+  constructor(public payload: { store: string, id: string }) {}
+}
+
+export class DeleteItemSuccessful implements Action {
+  readonly type = StoreActionType.DeleteItemSuccessful;
+}
+
+export class DeleteItemFailure implements Action {
+  readonly type = StoreActionType.DeleteItemFailure;
 }
 
 export class DeleteFromStore implements Action {

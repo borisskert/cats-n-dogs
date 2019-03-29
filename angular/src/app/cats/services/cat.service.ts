@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cat } from '../models/cat';
 import { Observable } from 'rxjs';
-import { Cats } from '../models/cats';
 import { HttpClient } from '@angular/common/http';
 import { AppConfig } from '../../app.config';
 import { map } from 'rxjs/operators';
@@ -36,26 +35,6 @@ export class CatService {
       }
     ).pipe(
       map(() => null)
-    );
-  }
-
-  public deleteCat(id: string): Observable<void> {
-    return this.httpClient.delete<void>(
-      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat/${id}`,
-      {
-        withCredentials: true
-      }
-    ).pipe(
-      map(() => null)
-    );
-  }
-
-  public loadCat(id: string) {
-    return this.httpClient.get<Cat>(
-      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat/${id}`,
-      {
-        withCredentials: true
-      }
     );
   }
 }
