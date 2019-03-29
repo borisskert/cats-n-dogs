@@ -8,12 +8,6 @@ import {
   DeleteCat,
   DeleteCatFailure,
   DeleteCatSuccessful,
-  LoadCatFromStore,
-  LoadCatFromStoreFailure,
-  LoadCatFromStoreSuccessful,
-  LoadCats,
-  LoadCatsFailure,
-  LoadCatsSuccessful,
   StoreCreatedCat,
   StoreCreatedCatFailure,
   StoreCreatedCatSuccessful,
@@ -32,18 +26,6 @@ export class Effects {
     private readonly actions$: Actions,
     private readonly catService: CatService,
   ) {}
-
-  @Effect()
-  loadCats$: Observable<CatAction> = this.actions$.pipe(
-    ofType<LoadCats>(CatActionType.LoadCats),
-    switchMap(() => {
-      return this.catService.loadCats()
-        .pipe(
-          map((cats) => new LoadCatsSuccessful(cats)),
-          catchError(() => of(new LoadCatsFailure()))
-        );
-    })
-  );
 
   @Effect()
   createCat$: Observable<CatAction> = this.actions$.pipe(
@@ -83,18 +65,6 @@ export class Effects {
         .pipe(
           map(() => new DeleteCatSuccessful()),
           catchError(() => of(new DeleteCatFailure()))
-        );
-    })
-  );
-
-  @Effect()
-  loadCat$: Observable<CatAction> = this.actions$.pipe(
-    ofType<LoadCatFromStore>(CatActionType.LoadCatFromStore),
-    switchMap(({ payload }) => {
-      return this.catService.loadCat(payload)
-        .pipe(
-          map((cat) => new LoadCatFromStoreSuccessful(cat)),
-          catchError(() => of(new LoadCatFromStoreFailure()))
         );
     })
   );

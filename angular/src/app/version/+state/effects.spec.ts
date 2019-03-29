@@ -6,10 +6,11 @@ import { provideMockedAppConfig } from '../../app.config.mock';
 import { StoreModule } from '@ngrx/store';
 import { metaReducers, reducers } from '../../+state/reducer';
 import { Actions, EffectsModule } from '@ngrx/effects';
-import { DeletedFromStore, LoadFromStore, LoadStatesSuccessful } from './actions';
+import { LoadStatesSuccessful } from './actions';
 import { MockedActions, provideMockedActions } from '../../+state/actions.mock';
 import { cold, hot } from 'jasmine-marbles';
 import { addMilliseconds } from 'date-fns';
+import { DeleteFromStore, LoadFromStore } from '../../store/+state/actions';
 
 describe('StateEffects', () => {
   let actions$: MockedActions;
@@ -208,7 +209,7 @@ describe('StateEffects', () => {
         ]);
 
       const completion =
-        new DeletedFromStore({
+        new DeleteFromStore({
           store: 'cat',
           id: 'cat id 1',
         });
@@ -244,7 +245,7 @@ describe('StateEffects', () => {
         ]);
 
       const completion =
-        new DeletedFromStore({
+        new DeleteFromStore({
           store: 'cat',
           id: 'cat id 1',
         });

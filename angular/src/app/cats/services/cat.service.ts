@@ -16,15 +16,6 @@ export class CatService {
     private readonly appConfig: AppConfig,
   ) { }
 
-  public loadCats(): Observable<Cats> {
-    return this.httpClient.get<Cats>(
-      `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat`,
-      {
-        withCredentials: true
-      }
-    );
-  }
-
   public createCat(cat: Cat): Observable<string> {
     return this.httpClient.post(
       `${this.appConfig.getValue('NG_BACKEND_URL')}/store/cat`,

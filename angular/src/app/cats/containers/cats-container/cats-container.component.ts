@@ -5,14 +5,15 @@ import { getCats, getCatToCreate, getSelectedCat } from '../../+state/selectors'
 import { Cat } from '../../models/cat';
 import { Observable } from 'rxjs';
 import {
-  CancelCatCreation, DeleteCat,
-  LoadCats,
+  CancelCatCreation,
+  DeleteCat,
   NewCatToCreate,
   SelectCat,
   StoreCreatedCat,
   StoreUpdatedCat,
   UnselectCat
 } from '../../+state/actions';
+import { LoadStore } from '../../../store/+state/actions';
 
 @Component({
   selector: 'app-cats-container',
@@ -32,7 +33,7 @@ export class CatsContainerComponent implements OnInit {
     this.catToCreate$ = this.store.select(getCatToCreate);
     this.selectedCat$ = this.store.select(getSelectedCat);
 
-    this.store.dispatch(new LoadCats());
+    this.store.dispatch(new LoadStore({ store: 'cat' }));
   }
 
   onNewCat(cat: Cat) {

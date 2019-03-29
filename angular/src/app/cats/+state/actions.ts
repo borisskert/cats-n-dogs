@@ -1,12 +1,7 @@
 import { Action } from '@ngrx/store';
 import { Cat } from '../models/cat';
-import { Cats } from '../models/cats';
-import { computeStyle } from '@angular/animations/browser/src/util';
 
 export enum CatActionType {
-  LoadCats = '[Cat] Load Cats',
-  LoadCatsSuccessful = '[Cat] Load Cats Successful',
-  LoadCatsFailure = '[Cat] Load Cats Failure',
   NewCatToCreate = '[Cat] New Cat To Create',
   StoreCreatedCat = '[Cat] Store Created Cat',
   StoreCreatedCatSuccessful = '[Cat] Store Created Cat Successful',
@@ -21,15 +16,10 @@ export enum CatActionType {
   DeleteCatSuccessful = '[Cat] Delete Cat Successful',
   DeleteCatFailure = '[Cat] Delete Failure',
   LoadCatFromStore = '[Cat] Load Cat From Store',
-  LoadCatFromStoreSuccessful = '[Cat] Load Cat From Store Successful',
-  LoadCatFromStoreFailure = '[Cat] Load Cat From Store Failure',
   DeleteCatFromStore = '[Cat] Delete Cat From Store',
 }
 
 export type CatAction =
-  | LoadCats
-  | LoadCatsSuccessful
-  | LoadCatsFailure
   | NewCatToCreate
   | StoreCreatedCat
   | StoreCreatedCatSuccessful
@@ -43,25 +33,8 @@ export type CatAction =
   | DeleteCat
   | DeleteCatSuccessful
   | DeleteCatFailure
-  | LoadCatFromStore
-  | LoadCatFromStoreSuccessful
-  | LoadCatFromStoreFailure
   | DeleteCatFromStore
   ;
-
-export class LoadCats implements Action {
-  readonly type = CatActionType.LoadCats;
-}
-
-export class LoadCatsSuccessful implements Action {
-  readonly type = CatActionType.LoadCatsSuccessful;
-
-  constructor(public payload: Cats) {}
-}
-
-export class LoadCatsFailure implements Action {
-  readonly type = CatActionType.LoadCatsFailure;
-}
 
 export class NewCatToCreate implements Action {
   readonly type = CatActionType.NewCatToCreate;
@@ -115,6 +88,7 @@ export class CancelCatCreation implements Action {
 
 export class DeleteCat implements Action {
   readonly type = CatActionType.DeleteCat;
+
   constructor(public payload: string) {}
 }
 
@@ -126,21 +100,8 @@ export class DeleteCatFailure implements Action {
   readonly type = CatActionType.DeleteCatFailure;
 }
 
-export class LoadCatFromStore implements Action {
-  readonly type = CatActionType.LoadCatFromStore;
-  constructor(public payload: string) {}
-}
-
-export class LoadCatFromStoreSuccessful implements Action {
-  readonly type = CatActionType.LoadCatFromStoreSuccessful;
-  constructor(public payload: Cat) {}
-}
-
-export class LoadCatFromStoreFailure implements Action {
-  readonly type = CatActionType.LoadCatFromStoreFailure;
-}
-
 export class DeleteCatFromStore implements Action {
   readonly type = CatActionType.DeleteCatFromStore;
+
   constructor(public payload: string) {}
 }

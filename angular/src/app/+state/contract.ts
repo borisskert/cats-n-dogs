@@ -3,6 +3,7 @@ import { MessagingState, initialState as messagingInitialState } from '../messag
 import { NavigationState, initialState as navigationInitialState } from '../navigation/+state/contract';
 import { CatState, initialState as catInitialState } from '../cats/+state/contract';
 import { VersionState, initialState as appInitialState } from '../version/+state/contract';
+import { StoreState, initialState as storeInitialState } from '../store/+state/contract';
 
 export interface State {
   authentication: AuthenticationState;
@@ -10,6 +11,7 @@ export interface State {
   navigation: NavigationState;
   cat: CatState;
   state: VersionState;
+  store: StoreState;
 }
 
 export const initialState: State = {
@@ -18,4 +20,5 @@ export const initialState: State = {
   navigation: navigationInitialState,
   cat: catInitialState,
   state: appInitialState,
+  store: storeInitialState,
 };

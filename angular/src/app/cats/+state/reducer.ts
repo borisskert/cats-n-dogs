@@ -13,12 +13,12 @@ export function reducer(state = initialState, action: CatAction): CatState {
       };
     }
 
-    case CatActionType.LoadCatsSuccessful: {
-      return {
-        ...state,
-        cats: action.payload,
-      };
-    }
+    // case CatActionType.LoadCatsSuccessful: {
+    //   return {
+    //     ...state,
+    //     cats: action.payload,
+    //   };
+    // }
 
     case CatActionType.StoreCreatedCatSuccessful: {
       return {
@@ -54,25 +54,25 @@ export function reducer(state = initialState, action: CatAction): CatState {
         catToCreate: null,
       };
     }
-
-    case CatActionType.LoadCatFromStoreSuccessful: {
-      return {
-        ...state,
-        cats: {
-          ...state.cats,
-          [action.payload.id]: action.payload
-        }
-      };
-    }
-
-    case CatActionType.DeleteCatFromStore: {
-      return {
-        ...state,
-        cats: filter({
-          ...state.cats
-        }, id => id !== action.payload)
-      };
-    }
+    //
+    // case CatActionType.LoadCatFromStoreSuccessful: {
+    //   return {
+    //     ...state,
+    //     cats: {
+    //       ...state.cats,
+    //       [action.payload.id]: action.payload
+    //     }
+    //   };
+    // }
+    //
+    // case CatActionType.DeleteCatFromStore: {
+    //   return {
+    //     ...state,
+    //     cats: filter({
+    //       ...state.cats
+    //     }, id => id !== action.payload)
+    //   };
+    // }
 
     default:
       return state;

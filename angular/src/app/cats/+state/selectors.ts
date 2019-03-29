@@ -1,11 +1,13 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CatState } from './contract';
+import { StoreState } from '../../store/+state/contract';
 
 const getCatState = createFeatureSelector<CatState>('cat');
+const getStoreState = createFeatureSelector<StoreState>('store');
 
 export const getCats = createSelector(
-  getCatState,
-  state => Object.values(state.cats),
+  getStoreState,
+  state => Object.values(state.cat),
 );
 
 export const getCatToCreate = createSelector(
@@ -19,10 +21,10 @@ export const getSelectedCatId = createSelector(
 );
 
 export const getSelectedCat = createSelector([
-    getCatState,
+    getStoreState,
     getSelectedCatId
   ],
   (state, catId) => {
-    return state.cats[catId] || null;
+    return state.cat[catId] || null;
   },
 );

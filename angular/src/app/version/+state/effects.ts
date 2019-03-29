@@ -7,8 +7,6 @@ import { Action, Store } from '@ngrx/store';
 import {
   AppAction,
   AppActionType,
-  DeletedFromStore,
-  LoadFromStore,
   LoadLatestStateVersionFailure,
   LoadLatestStateVersionSuccessful,
   LoadStatesFailure,
@@ -16,11 +14,11 @@ import {
 } from './actions';
 import { State } from '../../+state/contract';
 import { getVersion } from './selectors';
-import { CatActionType, DeleteCatFromStore, LoadCatFromStore } from '../../cats/+state/actions';
+import { CatActionType } from '../../cats/+state/actions';
 import { flatMap, groupBy } from '../../common/array-utils';
 import { StateVersion } from '../../models/state';
 import { compareAsc } from 'date-fns';
-import { StoreService } from '../services/store.service';
+import { DeleteFromStore, LoadFromStore } from '../../store/+state/actions';
 
 
 @Injectable()
@@ -29,7 +27,6 @@ export class Effects {
     private readonly actions$: Actions,
     private readonly stateService: StateService,
     private readonly store: Store<State>,
-    private readonly storeService: StoreService,
   ) {}
 
   @Effect()
@@ -83,26 +80,6 @@ export class Effects {
       );
     })
   );
-
-  @Effect()
-  loadFromStore: Observable<Action> = this.actions$.pipe(
-    ofType<LoadFromStore>(AppActionType.LoadFromStore),
-    switchMap(({ payload }) => {
-      if (payload.store === 'cat') {
-        return [ new LoadCatFromStore(payload.id) ];
-      }
-    })
-  );
-
-  @Effect()
-  deleteFromStore: Observable<Action> = this.actions$.pipe(
-    ofType<LoadFromStore>(AppActionType.DeletedFromStore),
-    switchMap(({ payload }) => {
-      if (payload.store === 'cat') {
-        return [ new DeleteCatFromStore(payload.id) ];
-      }
-    })
-  );
 }
 
 function mapToActions(groupedById): Action[] {
@@ -117,7 +94,7 @@ function groupToAction(groupById: StateVersion[]): Action[] {
     .sort((a, b) => compareAsc(a.timestamp, b.timestamp))
     .reduce((_, stateVersion) => {
       if (stateVersion.action.type === 'DELETE') {
-        return [ new DeletedFromStore({ store: stateVersion.action.store, id: stateVersion.action.id }) ];
+        return [ new DeleteFromStore({ store: stateVersion.action.store, id: stateVersion.action.id }) ];
       } else {
         return [ new LoadFromStore({ store: stateVersion.action.store, id: stateVersion.action.id }) ];
       }

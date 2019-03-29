@@ -15,6 +15,7 @@ import { DogsComponent } from './components/dogs/dogs.component';
 import { CatsModule } from './cats/cats.module';
 import { AppStateModule } from './app-state.module';
 import { StateModule } from './version/state.module';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { StateModule } from './version/state.module';
     MessagingModule,
     CatsModule,
     StateModule,
+    StoreModule,
   ],
   providers: [
     AppConfig, {
