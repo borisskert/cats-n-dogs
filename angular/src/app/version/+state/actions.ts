@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { StateVersion } from '../../models/state';
+import { StateVersion } from '../models/state';
 
 export enum AppActionType {
   LoadLatestStateVersion = '[App] Load Latest State Version',

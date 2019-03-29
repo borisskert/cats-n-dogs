@@ -14,9 +14,8 @@ import {
 } from './actions';
 import { State } from '../../+state/contract';
 import { getVersion } from './selectors';
-import { CatActionType } from '../../cats/+state/actions';
 import { flatMap, groupBy } from '../../common/array-utils';
-import { StateVersion } from '../../models/state';
+import { StateVersion } from '../models/state';
 import { compareAsc } from 'date-fns';
 import { DeleteFromStore, LoadFromStore, StoreActionType } from '../../store/+state/actions';
 
@@ -33,8 +32,8 @@ export class Effects {
   loadLatestStateVersion$: Observable<AppAction> = this.actions$.pipe(
     ofType(
       AppActionType.LoadLatestStateVersion,
-      CatActionType.CreateCatSuccessful,
-      CatActionType.UpdatedCatSuccessful,
+      StoreActionType.CreateItemSuccessful,
+      StoreActionType.UpdateItemSuccessful,
       StoreActionType.DeleteItemSuccessful,
     ),
     switchMap(() => {

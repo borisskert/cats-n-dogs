@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AppConfig } from '../../app.config';
-import { StateVersion } from '../../models/state';
+import { StateVersion } from '../models/state';
 
 @Injectable({
   providedIn: 'root'
