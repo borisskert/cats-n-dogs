@@ -1,0 +1,7 @@
+{
+  "id": "cat id 1",
+  "name": "cat name",
+  "race": "cat race",
+  "age": 3,
+  "owner": "cat owner"
+}
