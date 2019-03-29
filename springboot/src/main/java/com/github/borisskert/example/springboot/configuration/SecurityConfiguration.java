@@ -33,13 +33,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors()
                     .configurationSource(corsConfigurationSource())
                     .and()
-                .antMatcher("/**")
                 .authorizeRequests()
                     // https://stackoverflow.com/questions/53442381/cors-policy-no-access-control-allow-origin-header-is-present-on-the-requested
                     .antMatchers(HttpMethod.OPTIONS).permitAll()
                     .antMatchers(
                         "/",
-                        "/auth/login"
+                        "/auth/login",
+                        "/state/**"
                     ).permitAll()
                     .anyRequest().authenticated()
                     .and()

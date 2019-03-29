@@ -1,8 +1,11 @@
+import { Provider } from '@angular/core';
+import { AppConfig } from './app.config';
+
 export class MockedAppConfig {
 
   private env: {
     [key: string]: string;
-  } = null;
+  } = {};
 
   constructor() { }
 
@@ -15,4 +18,11 @@ export class MockedAppConfig {
   }) {
     this.env = env;
   }
+}
+
+export function provideMockedAppConfig(): Provider {
+  return {
+    provide: AppConfig,
+    useClass: MockedAppConfig
+  };
 }

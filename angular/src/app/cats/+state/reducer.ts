@@ -12,21 +12,14 @@ export function reducer(state = initialState, action: CatAction): CatState {
       };
     }
 
-    case CatActionType.LoadCatsSuccessful: {
-      return {
-        ...state,
-        cats: action.payload,
-      };
-    }
-
-    case CatActionType.StoreCreatedCatSuccessful: {
+    case CatActionType.CreateCatSuccessful: {
       return {
         ...state,
         catToCreate: null,
       };
     }
 
-    case CatActionType.StoreUpdatedCatSuccessful: {
+    case CatActionType.UpdatedCatSuccessful: {
       return {
         ...state,
         selectedCatId: null,

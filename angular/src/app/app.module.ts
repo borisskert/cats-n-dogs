@@ -3,10 +3,6 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { Effects } from './+state/effects';
-import { metaReducers, reducers } from './+state/reducer';
 import { AppConfig } from './app.config';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -18,6 +14,8 @@ import { HomeComponent } from './components/home/home.component';
 import { DogsComponent } from './components/dogs/dogs.component';
 import { CatsModule } from './cats/cats.module';
 import { AppStateModule } from './app-state.module';
+import { StateModule } from './version/state.module';
+import { StoreModule } from './store/store.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +34,8 @@ import { AppStateModule } from './app-state.module';
     AuthenticationModule,
     MessagingModule,
     CatsModule,
+    StateModule,
+    StoreModule,
   ],
   providers: [
     AppConfig, {
