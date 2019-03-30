@@ -3,15 +3,13 @@ package com.github.borisskert.example.springboot.state;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/state")
 public class StateResource {
 
     private final StateService stateService;
@@ -21,7 +19,7 @@ public class StateResource {
         this.stateService = stateService;
     }
 
-    @GetMapping("/state/latest")
+    @GetMapping("/latest")
     public ResponseEntity<String> getState() {
         Optional<String> maybeLatestState = stateService.getLatest();
 
@@ -30,7 +28,7 @@ public class StateResource {
                 .orElse(new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/state")
+    @GetMapping
     public List<State> getAll(
             @RequestParam(value = "from", required = false) String fromVersion,
             @RequestParam(value = "to", required = false) String toVersion
@@ -50,7 +48,7 @@ public class StateResource {
         return states;
     }
 
-    @GetMapping("/state/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<State> getById(@PathVariable String id) {
         return stateService.getById(id)
                 .map(state -> new ResponseEntity<>(state, HttpStatus.OK))

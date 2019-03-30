@@ -1,7 +1,6 @@
 package com.github.borisskert.example.springboot.store.validation;
 
 import org.bson.Document;
-import org.everit.json.schema.ValidationException;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;

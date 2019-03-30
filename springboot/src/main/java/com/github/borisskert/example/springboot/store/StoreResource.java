@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/store")
 public class StoreResource {
 
     private final StoreService storeService;
@@ -18,12 +19,12 @@ public class StoreResource {
         this.storeService = storeService;
     }
 
-    @GetMapping("/store/{type}")
+    @GetMapping("/{type}")
     public Map<String, Document> getAll(@PathVariable String type) {
         return storeService.findAll(type);
     }
 
-    @GetMapping("/store/{type}/{id}")
+    @GetMapping("/{type}/{id}")
     public ResponseEntity<Document> getOne(@PathVariable String type, @PathVariable String id) {
         Document document = storeService.find(type, id);
 
@@ -34,18 +35,18 @@ public class StoreResource {
         return new ResponseEntity<>(document, HttpStatus.OK);
     }
 
-    @PostMapping("/store/{type}")
+    @PostMapping("/{type}")
     public ResponseEntity<String> post(@PathVariable String type, @RequestBody Document document) {
         String createdId = storeService.create(type, document);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/store/{type}/{id}")
+    @PutMapping("/{type}/{id}")
     public void put(@PathVariable String type, @PathVariable String id, @RequestBody Document document) {
         storeService.update(type, id, document);
     }
 
-    @DeleteMapping("/store/{type}/{id}")
+    @DeleteMapping("/{type}/{id}")
     public void delete(@PathVariable String type, @PathVariable String id) {
         storeService.delete(type, id);
     }
