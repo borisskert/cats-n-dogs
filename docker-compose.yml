@@ -8,6 +8,8 @@ services:
     ports:
       - "9090:8080"
       - "9797:8787"
+    volumes:
+      - "./.docker/keycloak/data:/opt/jboss/keycloak/standalone/data"
     command:
       - "-b"
       - "0.0.0.0"
@@ -29,15 +31,27 @@ services:
       - SPRING_PROFILES_INCLUDE=debug
     command: config-cli
 
+  mongodb:
+    image: mongo:3.4.20
+    environment:
+      MONGO_INITDB_DATABASE: catsndogs
+    volumes:
+      - "./.docker/mongodb/db:/data/db"
+    command: --smallfiles
+
   springboot:
     image: local/authentication-backend:latest
     build: ./springboot
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/catsndogs
     ports:
       - "7070:8080"
     depends_on:
       - keycloak
+      - mongodb
     links:
       - keycloak
+      - mongodb
 
   angular:
     image: local/authentication-frontend:latest

@@ -1,6 +1,7 @@
 package com.github.borisskert.example.springboot.store;
 
 import com.github.borisskert.example.springboot.state.StateService;
+import com.github.borisskert.example.springboot.store.validation.JsonSchemaValidator;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
@@ -21,17 +22,23 @@ public class StoreService {
     private static final String MONGO_ID_PROPERTY_NAME = "_id";
     private static final String CUSTOM_ID_PROPERTY_NAME = "id";
 
+    private final JsonSchemaValidator validator;
     private final MongoTemplate mongoTemplate;
     private final StateService stateService;
 
     @Autowired
-    public StoreService(MongoTemplate mongoTemplate, StateService stateService) {
+    public StoreService(
+            JsonSchemaValidator validator,
+            MongoTemplate mongoTemplate,
+            StateService stateService
+    ) {
+        this.validator = validator;
         this.mongoTemplate = mongoTemplate;
         this.stateService = stateService;
     }
 
-    public Map<String, Document> findAll(final String collectionName) {
-        MongoCollection<Document> collection = getCollection(collectionName);
+    public Map<String, Document> findAll(final String store) {
+        MongoCollection<Document> collection = getCollection(store);
         return StreamSupport.stream(
                 collection.find().spliterator(),
                 false
@@ -43,13 +50,15 @@ public class StoreService {
         );
     }
 
-    public Document find(final String collectionName, final String id) {
-        MongoCollection<Document> collection = getCollection(collectionName);
+    public Document find(final String store, final String id) {
+        MongoCollection<Document> collection = getCollection(store);
         return collection.find(idFilter(id)).first();
     }
 
-    public String create(final String collectionName, final Document document) {
-        MongoCollection<Document> collection = getCollection(collectionName);
+    public String create(final String store, final Document document) {
+        validator.validate(store, document);
+
+        MongoCollection<Document> collection = getCollection(store);
 
         ObjectId id = ObjectId.get();
         String idAsHexString = id.toHexString();
@@ -60,36 +69,38 @@ public class StoreService {
                         .append(CUSTOM_ID_PROPERTY_NAME, idAsHexString)
         );
 
-        stateService.create(collectionName, idAsHexString);
+        stateService.create(store, idAsHexString);
 
         return idAsHexString;
     }
 
-    public void update(final String collectionName, final String id, final Document document) {
-        MongoCollection<Document> collection = getCollection(collectionName);
+    public void update(final String store, final String id, final Document document) {
+        validator.validate(store, document);
+
+        MongoCollection<Document> collection = getCollection(store);
         UpdateResult updateResult = collection.replaceOne(idFilter(id), document);
 
         if (!updateResult.wasAcknowledged() || updateResult.getMatchedCount() < 1) {
             throw new RuntimeException();
         }
 
-        stateService.update(collectionName, id);
+        stateService.update(store, id);
     }
 
-    public void delete(final String collectionName, final String id) {
-        MongoCollection<Document> collection = getCollection(collectionName);
+    public void delete(final String store, final String id) {
+        MongoCollection<Document> collection = getCollection(store);
         collection.deleteOne(idFilter(id));
 
-        stateService.delete(collectionName, id);
+        stateService.delete(store, id);
     }
 
-    private MongoCollection<Document> getCollection(String collectionName) {
+    private MongoCollection<Document> getCollection(String store) {
         MongoCollection<Document> collection;
 
-        if (mongoTemplate.collectionExists(collectionName)) {
-            collection = mongoTemplate.getCollection(collectionName);
+        if (mongoTemplate.collectionExists(store)) {
+            collection = mongoTemplate.getCollection(store);
         } else {
-            collection = mongoTemplate.createCollection(collectionName);
+            collection = mongoTemplate.createCollection(store);
         }
         return collection;
     }

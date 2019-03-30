@@ -4,11 +4,13 @@ import com.github.borisskert.example.springboot.authentication.service.Authentic
 import com.github.borisskert.example.springboot.authentication.service.CookieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
+@RequestMapping("/auth/logout")
 public class LogoutResource {
 
     private final AuthenticationService authenticationService;
@@ -23,7 +25,7 @@ public class LogoutResource {
         this.cookieService = cookieService;
     }
 
-    @PostMapping("/auth/logout")
+    @PostMapping
     public void logout(
             HttpServletResponse response
     ) {

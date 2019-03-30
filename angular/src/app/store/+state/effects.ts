@@ -64,7 +64,7 @@ export class Effects {
       return this.storeService.createItem(payload.store, payload.value)
         .pipe(
           map(() => new CreateItemSuccessful({ store: payload.store })),
-          catchError((e) => of(new CreateItemFailure(e.text)))
+          catchError((e) => of(new CreateItemFailure({ errorMessage: e.text })))
         );
     })
   );
@@ -76,7 +76,7 @@ export class Effects {
       return this.storeService.updateItem(payload.store, payload.id, payload.value)
         .pipe(
           map(() => new UpdateItemSuccessful({ store: payload.store })),
-          catchError((e) => of(new UpdateItemFailure(e.text)))
+          catchError((e) => of(new UpdateItemFailure({ errorMessage: e.text })))
         );
     })
   );
