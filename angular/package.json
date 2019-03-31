@@ -6,6 +6,7 @@
     "start": "npx ng serve --configuration=local",
     "build": "npx ng build",
     "test": "npx ng test",
+    "ci-test": "npx ng test --watch=false",
     "lint": "npx ng lint",
     "e2e": "npx ng e2e",
     "prod": "npx ng build --prod"

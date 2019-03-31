@@ -1,6 +1,6 @@
-# Code examples
+# Cats n' Dogs [![Build Status](https://travis-ci.org/borisskert/cats-n-dogs.svg?branch=master)](https://travis-ci.org/borisskert/cats-n-dogs)
 
-This code examples are created for myself to reuse simple patterns in other projects.
+This project contains code examples created for myself to reuse simple patterns in other projects.
 
 ## Folder structure
 

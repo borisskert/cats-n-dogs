@@ -1,0 +1,64 @@
+version: '3.1'
+services:
+  keycloak:
+    image: jboss/keycloak:4.8.3.Final
+    environment:
+      KEYCLOAK_PASSWORD: admin123
+      KEYCLOAK_USER: admin
+    ports:
+      - "9090:8080"
+      - "9797:8787"
+    volumes:
+      - "./.docker/keycloak/data:/opt/jboss/keycloak/standalone/data"
+    command:
+      - "-b"
+      - "0.0.0.0"
+      - "--debug"
+
+  keycloak_config_import:
+    image: adorsys/keycloak-config-cli:v0.4.3-4.8.3.Final
+    depends_on:
+      - keycloak
+    links:
+      - keycloak
+    volumes:
+      - ./keycloak:/tmp/keycloak-config-cli/configs
+    environment:
+      - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin123
+      - WAIT_TIME_IN_SECONDS=300
+      - SPRING_PROFILES_INCLUDE=debug
+    command: config-cli
+
+  mongodb:
+    image: mongo:3.4.20
+    environment:
+      MONGO_INITDB_DATABASE: catsndogs
+    volumes:
+      - "./.docker/mongodb/db:/data/db"
+    command: --smallfiles
+
+  springboot:
+    image: borisskert/cats-n-dogs:springboot
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb/catsndogs
+    ports:
+      - "7070:8080"
+    depends_on:
+      - keycloak
+      - mongodb
+    links:
+      - keycloak
+      - mongodb
+
+  angular:
+    image: borisskert/cats-n-dogs:angular
+    ports:
+      - "6060:80"
+    depends_on:
+      - springboot
+    links:
+      - springboot
+    environment:
+      - NG_BACKEND_URL=http://localhost:7070
