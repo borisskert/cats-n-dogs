@@ -21,7 +21,7 @@ describe('NavigationService', () => {
   });
 
   it('should return navigation elements for admin', () => {
-    const navigationElements = service.navigationFor([ 'moped_admin' ]);
+    const navigationElements = service.navigationFor([ 'catsndogs_admin' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -63,7 +63,7 @@ describe('NavigationService', () => {
   });
 
   it('should return navigation elements for user', () => {
-    const navigationElements = service.navigationFor([ 'moped_user' ]);
+    const navigationElements = service.navigationFor([ 'catsndogs_user' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -91,7 +91,7 @@ describe('NavigationService', () => {
   });
 
   it('should return navigation elements for admin and user', () => {
-    const navigationElements = service.navigationFor([ 'moped_admin', 'moped_user' ]);
+    const navigationElements = service.navigationFor([ 'catsndogs_admin', 'catsndogs_user' ]);
 
     expect(navigationElements).toEqual([
       {
@@ -133,7 +133,7 @@ describe('NavigationService', () => {
   });
 
   it('should return navigation elements for admin and user in opposite order', () => {
-    const navigationElements = service.navigationFor([ 'moped_user', 'moped_admin' ]);
+    const navigationElements = service.navigationFor([ 'catsndogs_user', 'catsndogs_admin' ]);
 
     expect(navigationElements).toEqual([
       {

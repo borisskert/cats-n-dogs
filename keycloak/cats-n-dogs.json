@@ -1,18 +1,18 @@
 {
-  "id": "moped",
-  "realm": "moped",
-  "displayName": "Moped Realm",
+  "id": "cats-n-dogs",
+  "realm": "cats-n-dogs",
+  "displayName": "cats-n-dogs Realm",
   "enabled": true,
   "roles": {
     "realm": [
       {
-        "name": "moped_admin",
+        "name": "catsndogs_admin",
         "description": "Admin role",
         "composite": false,
         "clientRole": false
       },
       {
-        "name": "moped_user",
+        "name": "catsndogs_user",
         "description": "User",
         "composite": false,
         "clientRole": false
@@ -27,7 +27,7 @@
       "firstName": "Test",
       "lastName": "Admin",
       "realmRoles": [
-        "moped_admin"
+        "catsndogs_admin"
       ],
       "credentials": [
         {
@@ -43,7 +43,7 @@
       "firstName": "Test",
       "lastName": "User",
       "realmRoles": [
-        "moped_user"
+        "catsndogs_user"
       ],
       "credentials": [
         {
@@ -55,12 +55,12 @@
   ],
   "clients": [
     {
-      "clientId": "moped",
-      "name": "moped",
-      "description": "Moped Client",
+      "clientId": "cats-n-dogs",
+      "name": "cats-n-dogs",
+      "description": "cats-n-dogs Client",
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "my-special-moped-client-secret",
+      "secret": "my-special-cats-n-dogs-client-secret",
       "directAccessGrantsEnabled": true,
       "redirectUris": [
         "*"

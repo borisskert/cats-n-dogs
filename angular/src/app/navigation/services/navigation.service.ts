@@ -49,14 +49,14 @@ export class NavigationService {
   };
 
   private readonly NavigationElementsPerRole = {
-    moped_admin: [
+    catsndogs_admin: [
       this.Home,
       this.Users,
       this.Cats,
       this.Dogs,
       this.Planets,
     ],
-    moped_user: [
+    catsndogs_user: [
       this.Home,
       this.Users,
       this.Planets,
