@@ -40,7 +40,7 @@ services:
     command: --smallfiles
 
   springboot:
-    image: local/authentication-backend:latest
+    image: local/cats-n-dogs__backend:latest
     build: ./springboot
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb/catsndogs
@@ -54,7 +54,7 @@ services:
       - mongodb
 
   angular:
-    image: local/authentication-frontend:latest
+    image: local/cats-n-dogs__frontend:latest
     build: ./angular
     ports:
       - "6060:80"

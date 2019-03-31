@@ -10,5 +10,5 @@ docker run \
   -v "${DOCKER_BUILD_PATH}":"${WORKING_DIRECTORY}" \
   -v "${HOME}/.m2":/root/.m2 \
   -w "${WORKING_DIRECTORY}" \
-  maven:3.6-alpine \
+  maven:3.6-jdk-11 \
   "${WORKING_DIRECTORY}/docker/compile/build.sh"

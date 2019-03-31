@@ -18,7 +18,9 @@ public class JwtService {
         Map<String, Claim> claims = decodedJwt.getClaims();
 
         Map<String, Object> realmAccess = claims.get("realm_access").asMap();
-        List<String> realmRoles = (List)realmAccess.get("roles");
+
+        @SuppressWarnings("unchecked")
+        List<String> realmRoles = (List) realmAccess.get("roles");
 
         return realmRoles.stream()
                 .map(SimpleGrantedAuthority::new)
