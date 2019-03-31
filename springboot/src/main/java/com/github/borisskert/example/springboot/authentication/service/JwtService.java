@@ -14,10 +14,13 @@ import java.util.stream.Collectors;
 public class JwtService {
 
     public List<SimpleGrantedAuthority> getAuthorities(String accessToken) {
+        List.of();
         DecodedJWT decodedJwt = JWT.decode(accessToken);
         Map<String, Claim> claims = decodedJwt.getClaims();
 
         Map<String, Object> realmAccess = claims.get("realm_access").asMap();
+
+        @SuppressWarnings("unchecked")
         List<String> realmRoles = (List)realmAccess.get("roles");
 
         return realmRoles.stream()

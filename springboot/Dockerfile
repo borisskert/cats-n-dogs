@@ -1,5 +1,5 @@
-FROM openjdk:8u181-jre
+FROM openjdk:11-jre-slim
 
-COPY ./target/authentication.jar /authentication.jar
+COPY ./target/cats-n-dogs.jar /cats-n-dogs.jar
 
-CMD ["java", "-jar", "/authentication.jar"]
+CMD ["java", "-jar", "/cats-n-dogs.jar"]

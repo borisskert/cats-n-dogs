@@ -5,9 +5,9 @@ spring:
 
 application:
   authentication:
-    client-id: moped
-    client-secret: my-special-moped-client-secret
-    access-token-uri: http://keycloak:8080/auth/realms/moped/protocol/openid-connect/token
-    user-info-uri: http://keycloak:8080/auth/realms/moped/protocol/openid-connect/userinfo
-    end-session-endpoint: http://keycloak:8080/auth/realms/moped/protocol/openid-connect/logout
+    client-id: cats-n-dogs
+    client-secret: my-special-cats-n-dogs-client-secret
+    access-token-uri: http://keycloak:8080/auth/realms/cats-n-dogs/protocol/openid-connect/token
+    user-info-uri: http://keycloak:8080/auth/realms/cats-n-dogs/protocol/openid-connect/userinfo
+    end-session-endpoint: http://keycloak:8080/auth/realms/cats-n-dogs/protocol/openid-connect/logout
     use-secure-cookies: false
