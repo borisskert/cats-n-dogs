@@ -13,16 +13,14 @@ import { AutoDismissMessages, CloseMessage, FixMessage, UnfixMessage } from '../
 })
 export class MessagingContainerComponent implements OnInit {
 
-  private messages$: Observable<Message[]>;
-  private messageIds$: Observable<string[]>;
-  private autoDismiss$: Observable<boolean>;
+  public messages$: Observable<Message[]>;
+  public messageIds$: Observable<string[]>;
 
   constructor(private readonly store: Store<State>) { }
 
   ngOnInit(): void {
     this.messages$ = this.store.select(getMessages);
     this.messageIds$ = this.store.select(getMessageIds);
-    this.autoDismiss$ = this.store.select(getAutoDismiss);
 
     this.store.dispatch(new AutoDismissMessages());
   }

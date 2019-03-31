@@ -1,0 +1,25 @@
+language: generic
+
+services:
+  - docker
+
+cache:
+  directories:
+    - $HOME/.m2
+
+script:
+  - /bin/bash .travis/build.bash
+
+deploy:
+  -
+    skip_cleanup: true
+    provider: script
+    script: /bin/bash .travis/deploy.bash
+    on:
+      branch: master
+      tags: false
+
+env:
+  global:
+    # encrypted docker hub credentials
+    - secure: "ZXQoEbWp7A/40k6gBICIP/nCvSWniBAsw0XJ4dhUAgsrmCQGHfQWotPlv8rxvoPLiNmW0a2eHQm0vzc2/ZIp3HAOzJqPDXHK8D7dVEQ0wGgi/SegQ3kZIpbkHJ6JdSFYE2Z0spgq7jtkSrIzdBCXRymhFNDI9T1gf2wGLg4XvLogn4je0NhQzRWmQUEMm/NbU4biRQm4oTiyo3a6XqSz1Nu0l/bpanZp633ea5Boe5sBS3ohOCrI66XftVA/MvoR0TRGFYxpfRsA4/VDwzi27rHYPc6JM5I1HE/HSiUnaZuDNJGqmjDHZJ6aDNDwpKWfM/Q1wMqKUfWHCrvgsjPEClgWA6WTEOJJ1QTeN7oSAQZoCnF01yHG4eqEr8eSWLgO/YnaaKld8L456SPH6S964QT8oZnnkFDBgG6oRlUCEMvSKZ+cMvJkS/r/j48oYPM/pvOlX10NhC4Hc+p5NJzkhEEG2oxAuyDoTSj/8JK8adeghNiaVB5yitI+ccRUs0m5/0sMhQZWqwvUjq8P+Vhgf4Pt8KHqRdcn3Izk8qaHwimLp2Ay8QRJtHq/Bb90HZpwK6wuv5pr70MU0CdO5o8+PZET7KxRpRCWQFX0WaFUe9KXgx/KebYhFm+C3hnChkxa1LVHmutpDUXGOm4FnHlNeeRlIWq524nQV9Eb8qBvQCc="

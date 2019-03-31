@@ -1,6 +1,6 @@
 <div class="message__container"
-     (mouseover)="mouseEnter(message.id)"
-     (mouseout)="mouseLeave(message.id)">
+     (mouseover)="mouseEnter()"
+     (mouseout)="mouseLeave()">
   <span class="message__timestamp">{{formatTimestamp(message.timestamp)}}</span>
   <span class="message__text">{{message.text}}</span>
   <button type="button" (click)="closeMessage()">Close</button>
