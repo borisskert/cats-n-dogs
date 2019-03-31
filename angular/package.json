@@ -7,7 +7,8 @@
     "build": "npx ng build",
     "test": "npx ng test",
     "lint": "npx ng lint",
-    "e2e": "npx ng e2e"
+    "e2e": "npx ng e2e",
+    "prod": "npx ng build --prod"
   },
   "private": true,
   "dependencies": {
