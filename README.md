@@ -15,6 +15,14 @@ Consider corresponding README files within the sub-folders.
 
 ## Run the solution
 
+### Run with images from docker hub
+
+```bash
+$ docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml down --remove-orphans && docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml up
+```
+
+## Run from the source code
+
 You can run the solution after you built it within docker.
 
 Use this command:
@@ -22,3 +30,7 @@ Use this command:
 ```bash
 $ docker-compose down --remove-orphans && docker-compose up --build
 ```
+
+## Further links
+
+* [Repository on docker hub](https://cloud.docker.com/u/borisskert/repository/docker/borisskert/cats-n-dogs)
