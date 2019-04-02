@@ -3,11 +3,18 @@ import { AuthenticationActions, AuthenticationActionTypes } from './actions';
 
 export function reducer(state = initialState, action: AuthenticationActions): AuthenticationState {
   switch (action.type) {
+    case AuthenticationActionTypes.GotUserInfo: {
+      return {
+        ...state,
+        userInfo: action.payload.userInfo,
+      };
+    }
+
     case AuthenticationActionTypes.UserInfoLoadSuccessful: {
       return {
         ...state,
         isAuthenticated: true,
-        userInfo: action.payload
+        userInfo: action.payload.userInfo,
       };
     }
 
@@ -15,7 +22,6 @@ export function reducer(state = initialState, action: AuthenticationActions): Au
       return {
         ...state,
         isAuthenticated: false,
-        userInfo: null
       };
     }
 
@@ -23,7 +29,7 @@ export function reducer(state = initialState, action: AuthenticationActions): Au
       return {
         ...state,
         isAuthenticated: false,
-        userInfo: null
+        userInfo: null,
       };
     }
 

@@ -1,7 +1,8 @@
 <app-user-info
-  *ngIf="isAuthenticated$ | async"
+  *ngIf="userInfo$ | async"
   [userInfo]="userInfo$ | async"
-  (logout)="onLogout()"
+  [isAuthenticated]="isAuthenticated$ | async"
 >
 </app-user-info>
+<button *ngIf="isAuthenticated$ | async" type="button" (click)="onLogout()">Logout</button>
 <app-login *ngIf="!(isAuthenticated$ | async)" (login)="onLogin($event)"></app-login>

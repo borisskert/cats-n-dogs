@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserInfo } from '../../models/user-info.interface';
 import { Store } from '@ngrx/store';
-import { TryLoadUserInfo, TryLogin, TryLogout } from '../../+state/actions';
+import { GetUserInfo, TryLoadUserInfo, TryLogin, TryLogout } from '../../+state/actions';
 import { LoginCredentials } from '../../models/login-credentials.interface';
 import { userInfo, isAuthenticated } from '../../+state/selectors';
 import { State } from '../../../+state/contract';
@@ -23,7 +23,7 @@ export class AuthenticationContainerComponent implements OnInit {
     this.isAuthenticated$ = this.store.select(isAuthenticated);
     this.userInfo$ = this.store.select(userInfo);
 
-    this.store.dispatch(new TryLoadUserInfo());
+    this.store.dispatch(new GetUserInfo());
   }
 
   public onLogin(login: LoginCredentials) {

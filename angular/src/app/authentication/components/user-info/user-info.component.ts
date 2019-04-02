@@ -9,14 +9,10 @@ import { UserInfo } from '../../models/user-info.interface';
 export class UserInfoComponent implements OnInit {
 
   @Input() userInfo: UserInfo;
-  @Output() logout = new EventEmitter<void>();
+  @Input() isAuthenticated: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  onLogout() {
-    this.logout.emit();
   }
 }

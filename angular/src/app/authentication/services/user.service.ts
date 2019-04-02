@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserInfo } from '../models/user-info.interface';
 import { map } from 'rxjs/operators';
 import { AppConfig } from '../../app.config';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,18 @@ export class UserService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly appConfig: AppConfig,
+    private readonly localStorage: LocalStorageService,
   ) { }
 
-  public getUser(): Observable<UserInfo> {
+  public readUser(): UserInfo | null {
+    return this.localStorage.getObject('user-info');
+  }
+
+  public storeUser(userInfo: UserInfo): void {
+    return this.localStorage.setObject('user-info', userInfo);
+  }
+
+  public loadUser(): Observable<UserInfo> {
     return this.httpClient.get<UserInfoResponse>(
       `${this.appConfig.getValue('NG_BACKEND_URL')}/user`,
       {
