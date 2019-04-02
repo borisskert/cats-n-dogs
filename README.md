@@ -8,6 +8,7 @@ This project contains code examples created for myself to reuse simple patterns 
 |------------|-------------|---------------|
 | `./angular` | Angular with ngrx examples | [README](./angular/README.md) |
 | `./springboot` | Spring boot examples written in java | [README](./springboot/README.md) |
+| `./keycloak` | Realm configuration which is about to be imported to Keycloak | [Keycloak config CLI](https://github.com/adorsys/keycloak-config-cli) |
 
 ## Build the solution
 
@@ -18,7 +19,9 @@ Consider corresponding README files within the sub-folders.
 ### Run with images from docker hub
 
 ```bash
-$ docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml down --remove-orphans && docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml up
+$ docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml down --remove-orphans && \
+  docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml pull && \
+  docker-compose --project-name hub.catsndocs --file hub.docker-compose.yml up
 ```
 
 ## Run from the source code
