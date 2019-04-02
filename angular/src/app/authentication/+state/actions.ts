@@ -9,6 +9,8 @@ export enum AuthenticationActionTypes {
   TryLogout = '[Authentication] Try Logout',
   LogoutSuccessful = '[Authentication] Logout Sucessful',
   LogoutFailure = '[Authentication] Logout Failure',
+  GetUserInfo = '[Authentication] Get User Info',
+  GotUserInfo = '[Authentication] Got User Info',
   TryLoadUserInfo = '[Authentication] Try Load User Info',
   UserInfoLoadSuccessful = '[Authentication] User Info Load Sucessful',
   UserInfoLoadFailure = '[Authentication] User Info Load Failure',
@@ -20,7 +22,10 @@ export type AuthenticationActions =
   | LoginFailure
   | TryLogout
   | LogoutSuccessful
-  | LogoutFailure| TryLoadUserInfo
+  | LogoutFailure
+  | GetUserInfo
+  | GotUserInfo
+  | TryLoadUserInfo
   | UserInfoLoadSuccessful
   | UserInfoLoadFailure
   ;
@@ -52,6 +57,16 @@ export class LogoutFailure implements Action {
   readonly type = AuthenticationActionTypes.LogoutFailure;
 }
 
+export class GetUserInfo implements Action {
+  readonly type = AuthenticationActionTypes.GetUserInfo;
+}
+
+export class GotUserInfo implements Action {
+  readonly type = AuthenticationActionTypes.GotUserInfo;
+
+  constructor(public payload: { userInfo: UserInfo }) {}
+}
+
 export class TryLoadUserInfo implements Action {
   readonly type = AuthenticationActionTypes.TryLoadUserInfo;
 }
@@ -59,7 +74,7 @@ export class TryLoadUserInfo implements Action {
 export class UserInfoLoadSuccessful implements Action {
   readonly type = AuthenticationActionTypes.UserInfoLoadSuccessful;
 
-  constructor(public payload: UserInfo) {}
+  constructor(public payload: { userInfo: UserInfo }) {}
 }
 
 export class UserInfoLoadFailure implements Action {
