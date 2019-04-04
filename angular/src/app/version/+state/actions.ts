@@ -2,6 +2,8 @@ import { Action } from '@ngrx/store';
 import { StateVersion } from '../models/state';
 
 export enum AppActionType {
+  ReadCurrentStateVersion = '[App] Read Current State Version',
+  ReadCurrentStateVersionSuccessful = '[App] Read Current State Version Successful',
   LoadLatestStateVersion = '[App] Load Latest State Version',
   LoadLatestStateVersionSuccessful = '[App] Load Latest State Version Successful',
   LoadLatestStateVersionFailure = '[App] Load Latest State Version Failure',
@@ -10,12 +12,24 @@ export enum AppActionType {
 }
 
 export type AppAction =
+  | ReadCurrentStateVersion
+  | ReadCurrentStateVersionSuccessful
   | LoadLatestStateVersion
   | LoadLatestStateVersionSuccessful
   | LoadLatestStateVersionFailure
   | LoadStatesSuccessful
   | LoadStatesFailure
   ;
+
+export class ReadCurrentStateVersion implements Action {
+  readonly type = AppActionType.ReadCurrentStateVersion;
+}
+
+export class ReadCurrentStateVersionSuccessful implements Action {
+  readonly type = AppActionType.ReadCurrentStateVersionSuccessful;
+
+  constructor(public payload: { currentVersion: string }) {}
+}
 
 export class LoadLatestStateVersion implements Action {
   readonly type = AppActionType.LoadLatestStateVersion;

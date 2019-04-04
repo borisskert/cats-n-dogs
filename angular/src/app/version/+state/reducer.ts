@@ -1,13 +1,20 @@
 import { AppAction, AppActionType } from './actions';
-import { VersionState, initialState } from './contract';
+import { initialState, VersionState } from './contract';
 
 export function reducer(state = initialState, action: AppAction): VersionState {
   switch (action.type) {
 
+    case AppActionType.ReadCurrentStateVersionSuccessful: {
+      return {
+        ...state,
+        current: action.payload.currentVersion,
+      };
+    }
+
     case AppActionType.LoadLatestStateVersionSuccessful: {
       return {
         ...state,
-        version: action.payload,
+        latest: action.payload,
       };
     }
 

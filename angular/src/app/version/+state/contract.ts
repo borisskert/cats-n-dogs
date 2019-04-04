@@ -1,7 +1,9 @@
 export interface VersionState {
-  version: string;
+  current: string;
+  latest: string;
 }
 
 export const initialState: VersionState = {
-  version: null,
+  current: null,
+  latest: null,
 };

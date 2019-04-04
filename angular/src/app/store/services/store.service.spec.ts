@@ -3,13 +3,19 @@ import { TestBed } from '@angular/core/testing';
 import { StoreService } from './store.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockedAppConfig } from '../../app.config.mock';
+import { AbstractLeveldownProvider } from '../../services/level/abstract-leveldown.provider';
+import { MemDownProvider } from '../../services/level/memdown.provider';
 
 describe('StoreService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [ HttpClientTestingModule ],
     providers: [
-      provideMockedAppConfig()
-    ]
+      provideMockedAppConfig(),
+      {
+        provide: AbstractLeveldownProvider,
+        useClass: MemDownProvider
+      }
+    ],
   }));
 
   it('should be created', () => {

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AppConfig } from '../../app.config';
 import { StateVersion } from '../models/state';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,12 @@ export class StateService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly appConfig: AppConfig,
+    private readonly localStorage: LocalStorageService,
   ) { }
+
+  public getCurrentVersion(): string {
+    return this.localStorage.getString('state-version');
+  }
 
   public getLatestVersion(): Observable<string> {
     return this.httpClient.get(

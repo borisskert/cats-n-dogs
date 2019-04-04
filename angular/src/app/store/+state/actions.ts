@@ -1,8 +1,11 @@
 import { Action } from '@ngrx/store';
-import { Cat } from '../../cats/models/cat';
-import { CatActionType } from '../../cats/+state/actions';
 
 export enum StoreActionType {
+  SynchronizeStores = '[Store] Synchronize Stores',
+  ReadStores = '[Store] Read Stores',
+  ReadStore = '[Store] Read Store',
+  ReadStoreSuccessful = '[Store] Read Store Successful',
+  ReadStoreFailure = '[Store] Read Store Failure',
   LoadStore = '[Store] Load Store',
   LoadStoreSuccessful = '[Store] Load Store Successful',
   LoadStoreFailure = '[Store] Load Store Failure',
@@ -22,6 +25,11 @@ export enum StoreActionType {
 }
 
 export type StoreAction =
+  | SynchronizeStores
+  | ReadStores
+  | ReadStore
+  | ReadStoreSuccessful
+  | ReadStoreFailure
   | LoadStore
   | LoadStoreSuccessful
   | LoadStoreFailure
@@ -39,6 +47,30 @@ export type StoreAction =
   | DeleteItemFailure
   | DeleteFromStore
   ;
+
+export class SynchronizeStores implements Action {
+  readonly type = StoreActionType.SynchronizeStores;
+}
+
+export class ReadStores implements Action {
+  readonly type = StoreActionType.ReadStores;
+}
+
+export class ReadStore implements Action {
+  readonly type = StoreActionType.ReadStore;
+
+  constructor(public payload: { store: string }) {}
+}
+
+export class ReadStoreSuccessful implements Action {
+  readonly type = StoreActionType.ReadStoreSuccessful;
+
+  constructor(public payload: { store: string, value: any }) {}
+}
+
+export class ReadStoreFailure implements Action {
+  readonly type = StoreActionType.ReadStoreFailure;
+}
 
 export class LoadStore implements Action {
   readonly type = StoreActionType.LoadStore;
@@ -59,7 +91,7 @@ export class LoadStoreFailure implements Action {
 export class LoadFromStore implements Action {
   readonly type = StoreActionType.LoadFromStore;
 
-  constructor(public payload: { store: string, id: string }) {}
+  constructor(public payload: { store: string, id: string, versionId: string }) {}
 }
 
 export class LoadFromStoreSuccessful implements Action {
@@ -80,6 +112,7 @@ export class CreateItem implements Action {
 
 export class CreateItemSuccessful implements Action {
   readonly type = StoreActionType.CreateItemSuccessful;
+
   constructor(public payload: { store: string }) {}
 }
 
@@ -97,6 +130,7 @@ export class UpdateItem implements Action {
 
 export class UpdateItemSuccessful implements Action {
   readonly type = StoreActionType.UpdateItemSuccessful;
+
   constructor(public payload: { store: string }) {}
 }
 
@@ -123,5 +157,5 @@ export class DeleteItemFailure implements Action {
 export class DeleteFromStore implements Action {
   readonly type = StoreActionType.DeleteFromStore;
 
-  constructor(public payload: { store: string, id: string }) {}
+  constructor(public payload: { store: string, id: string, versionId: string }) {}
 }

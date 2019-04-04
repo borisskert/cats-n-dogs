@@ -3,7 +3,12 @@ import { VersionState } from './contract';
 
 const getAppState = createFeatureSelector<VersionState>('state');
 
-export const getVersion = createSelector(
+export const getCurrentVersion = createSelector(
   getAppState,
-  state => state.version,
+  state => state.current,
+);
+
+export const getLatestVersion = createSelector(
+  getAppState,
+  state => state.latest,
 );

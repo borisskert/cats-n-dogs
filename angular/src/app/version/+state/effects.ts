@@ -10,10 +10,10 @@ import {
   LoadLatestStateVersionFailure,
   LoadLatestStateVersionSuccessful,
   LoadStatesFailure,
-  LoadStatesSuccessful
+  LoadStatesSuccessful, ReadCurrentStateVersion, ReadCurrentStateVersionSuccessful
 } from './actions';
 import { State } from '../../+state/contract';
-import { getVersion } from './selectors';
+import { getLatestVersion, getCurrentVersion } from './selectors';
 import { flatMap, groupBy } from '../../common/array-utils';
 import { StateVersion } from '../models/state';
 import { compareAsc } from 'date-fns';
@@ -27,6 +27,15 @@ export class Effects {
     private readonly stateService: StateService,
     private readonly store: Store<State>,
   ) {}
+
+  @Effect()
+  readCurrentStateVersion$ = this.actions$.pipe(
+    ofType<ReadCurrentStateVersion>(AppActionType.ReadCurrentStateVersion),
+    map(() => {
+      const currentVersion = this.stateService.getCurrentVersion();
+      return new ReadCurrentStateVersionSuccessful({ currentVersion });
+    })
+  );
 
   @Effect()
   loadLatestStateVersion$: Observable<AppAction> = this.actions$.pipe(
@@ -48,7 +57,7 @@ export class Effects {
   @Effect()
   loadState$: Observable<AppAction> = this.actions$.pipe(
     ofType<LoadLatestStateVersionSuccessful>(AppActionType.LoadLatestStateVersionSuccessful),
-    withLatestFrom(this.store.select(getVersion), (action, version) => ({ latest: action.payload, current: version })),
+    withLatestFrom(this.store.select(getCurrentVersion), (action, version) => ({ latest: action.payload, current: version })),
     switchMap(({ latest, current }) => {
       if (current) {
         return this.stateService.loadStateBetween(current, latest)
@@ -93,9 +102,9 @@ function groupToAction(groupById: StateVersion[]): Action[] {
     .sort((a, b) => compareAsc(a.timestamp, b.timestamp))
     .reduce((_, stateVersion) => {
       if (stateVersion.action.type === 'DELETE') {
-        return [ new DeleteFromStore({ store: stateVersion.action.store, id: stateVersion.action.id }) ];
+        return [ new DeleteFromStore({ store: stateVersion.action.store, id: stateVersion.action.id, versionId: stateVersion.id }) ];
       } else {
-        return [ new LoadFromStore({ store: stateVersion.action.store, id: stateVersion.action.id }) ];
+        return [ new LoadFromStore({ store: stateVersion.action.store, id: stateVersion.action.id, versionId: stateVersion.id }) ];
       }
     }, []);
 }

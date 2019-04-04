@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import {
   CreateItem,
   CreateItemFailure,
@@ -15,8 +15,12 @@ import {
   LoadStore,
   LoadStoreFailure,
   LoadStoreSuccessful,
+  ReadStore,
+  ReadStoreFailure,
+  ReadStores,
+  ReadStoreSuccessful,
   StoreAction,
-  StoreActionType,
+  StoreActionType, SynchronizeStores,
   UpdateItem,
   UpdateItemFailure,
   UpdateItemSuccessful,
@@ -24,14 +28,69 @@ import {
 import { StoreService } from '../services/store.service';
 import { MessagingAction, NewMessage } from '../../messaging/+state/actions';
 import { newError } from '../../messaging/models/message.interface';
+import { StateService } from '../../version/services/state.service';
 
 @Injectable()
 export class Effects {
 
   constructor(
     private readonly actions$: Actions,
+    private readonly stateService: StateService,
     private readonly storeService: StoreService,
   ) {}
+  //
+  // @Effect()
+  // synchronizeStores$: Observable<StoreAction> = this.actions$.pipe(
+  //   ofType<SynchronizeStores>(StoreActionType.SynchronizeStores),
+  //   switchMap(() => {
+  //     const currentVersion = this.stateService.getCurrentVersion();
+  //     return this.stateService.getLatestVersion().pipe(
+  //       map(latestVersion => {
+  //         if (currentVersion === null || currentVersion !== latestVersion) {
+  //
+  //         }
+  //
+  //
+  //
+  //         return [];
+  //       })
+  //     );
+  //   })
+  // );
+
+  @Effect()
+  readStores$: Observable<StoreAction> = this.actions$.pipe(
+    ofType<ReadStores>(StoreActionType.ReadStores),
+    switchMap(() => {
+      return [ new ReadStore({ store: 'cat' }) ];
+    })
+  );
+
+  @Effect()
+  readStore$: Observable<StoreAction> = this.actions$.pipe(
+    ofType<ReadStore>(StoreActionType.ReadStore),
+    switchMap(({ payload }) => {
+      return this.storeService.readStore(payload.store)
+        .pipe(
+          map((value) => new ReadStoreSuccessful({ store: payload.store, value })),
+          catchError(() => of(new ReadStoreFailure()))
+        );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  saveStore$ = this.actions$.pipe(
+    ofType<LoadStoreSuccessful>(StoreActionType.LoadStoreSuccessful),
+    tap(({ payload }) => {
+      this.storeService.saveStore(payload.store, payload.value).subscribe(
+        () => {
+          console.log('ok')
+        }, error => {
+          console.log(error)
+        }
+      );
+    })
+  );
 
   @Effect()
   loadStore$: Observable<StoreAction> = this.actions$.pipe(
