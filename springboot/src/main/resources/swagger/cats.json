@@ -1,0 +1,263 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Api Documentation",
+    "description": "Api Documentation",
+    "version": "0.1.0-SNAPSHOT",
+    "termsOfService": "urn:tos",
+    "contact": {
+
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "cat-store",
+      "description": "Cat Store Resource"
+    }
+  ],
+  "paths": {
+    "/store/cat": {
+      "get": {
+        "tags": [
+          "cat-store"
+        ],
+        "summary": "getAll",
+        "operationId": "getAllUsingGET_1",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Cat"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "cat-store"
+        ],
+        "summary": "post",
+        "operationId": "postUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cat",
+            "description": "cat to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CatWithoutId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/store/cat/{id}": {
+      "get": {
+        "tags": [
+          "cat-store"
+        ],
+        "summary": "getOne",
+        "operationId": "getOneUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Cat"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "cat-store"
+        ],
+        "summary": "put",
+        "operationId": "putUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "cat",
+            "description": "Cat to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Cat"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "cat-store"
+        ],
+        "summary": "delete",
+        "operationId": "deleteUsingDELETE",
+        "produces": [
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Cat": {
+      "type": "object",
+      "description": "A typical cat",
+      "properties": {
+        "id": {
+          "description": "The unique identifier for a cat",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the cat",
+          "type": "string"
+        },
+        "age": {
+          "type": "number",
+          "description": "Age of the cat"
+        },
+        "race": {
+          "type": "string",
+          "description": "Race of the cat"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner of the cat"
+        }
+      }
+    },
+    "CatWithoutId": {
+      "type": "object",
+      "description": "A cat without id - used for creation",
+      "properties": {
+        "name": {
+          "description": "Name of the cat",
+          "type": "string"
+        },
+        "age": {
+          "type": "number",
+          "description": "Age of the cat"
+        },
+        "race": {
+          "type": "string",
+          "description": "Race of the cat"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner of the cat"
+        }
+      }
+    }
+  }
+}

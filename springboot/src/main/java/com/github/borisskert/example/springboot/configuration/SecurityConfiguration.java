@@ -1,6 +1,7 @@
 package com.github.borisskert.example.springboot.configuration;
 
 import com.github.borisskert.example.springboot.authentication.filter.AuthenticationFilter;
+import com.github.borisskert.example.springboot.swagger.SwaggerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,10 +22,12 @@ import java.util.Collections;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationFilter authenticationFilter;
+    private final SwaggerProperties swaggerProperties;
 
     @Autowired
-    public SecurityConfiguration(AuthenticationFilter authenticationFilter) {
+    public SecurityConfiguration(AuthenticationFilter authenticationFilter, SwaggerProperties swaggerProperties) {
         this.authenticationFilter = authenticationFilter;
+        this.swaggerProperties = swaggerProperties;
     }
 
     @Override
@@ -52,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
+                swaggerProperties.getResourceLocation() + "/**",
                 "/v2/api-docs",
                 "/swagger-resources",
                 "/swagger-resources/configuration/ui",

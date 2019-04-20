@@ -3,6 +3,13 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration
 
+swagger:
+  resource-location: /swagger
+  resources:
+    - name: cats
+      swaggerVersion: 2.0
+      location: /swagger/cats.json
+
 application:
   authentication:
     client-id: cats-n-dogs
