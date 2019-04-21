@@ -1,5 +1,6 @@
 package com.github.borisskert.example.springboot.state;
 
+import com.github.borisskert.example.springboot.swagger.SwaggerDocumented;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/state")
+@SwaggerDocumented
 public class StateResource {
 
     private final StateService stateService;
