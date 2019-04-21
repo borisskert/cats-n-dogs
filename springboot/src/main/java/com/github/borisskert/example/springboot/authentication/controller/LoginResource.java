@@ -4,6 +4,7 @@ import com.github.borisskert.example.springboot.authentication.model.Authenticat
 import com.github.borisskert.example.springboot.authentication.model.LoginCredentials;
 import com.github.borisskert.example.springboot.authentication.service.AuthenticationService;
 import com.github.borisskert.example.springboot.authentication.service.CookieService;
+import com.github.borisskert.example.springboot.swagger.SwaggerDocumented;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth/login")
+@SwaggerDocumented
 public class LoginResource {
 
     private final AuthenticationService authenticationService;

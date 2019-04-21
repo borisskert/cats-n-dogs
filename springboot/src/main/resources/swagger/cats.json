@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Api Documentation",
-    "description": "Api Documentation",
+    "title": "Cat Store Api Documentation",
+    "description": "Api Documentation how to read, create, update and delete Cats",
     "version": "0.1.0-SNAPSHOT",
     "termsOfService": "urn:tos",
     "contact": {
@@ -37,10 +37,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Cat"
-              }
+              "$ref": "#/definitions/CatMap"
             }
           },
           "401": {
@@ -257,6 +254,17 @@
           "type": "string",
           "description": "Owner of the cat"
         }
+      }
+    },
+    "CatMap": {
+      "description": "A (key, Cat) map.",
+      "properties": {
+        "default": {
+          "$ref": "#/definitions/Cat"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/Cat"
       }
     }
   }
