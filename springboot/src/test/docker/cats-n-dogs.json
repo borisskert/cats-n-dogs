@@ -1,0 +1,73 @@
+{
+  "id": "cats-n-dogs",
+  "realm": "cats-n-dogs",
+  "displayName": "cats-n-dogs Realm",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "catsndogs_admin",
+        "description": "Admin role",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "catsndogs_user",
+        "description": "User",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@mail.org",
+      "enabled": true,
+      "firstName": "Test",
+      "lastName": "Admin",
+      "realmRoles": [
+        "catsndogs_admin"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123"
+        }
+      ]
+    },
+    {
+      "username": "user",
+      "email": "user@mail.org",
+      "enabled": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "realmRoles": [
+        "catsndogs_user"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password123"
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "cats-n-dogs",
+      "name": "cats-n-dogs",
+      "description": "cats-n-dogs Client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "my-special-cats-n-dogs-client-secret",
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ]
+}

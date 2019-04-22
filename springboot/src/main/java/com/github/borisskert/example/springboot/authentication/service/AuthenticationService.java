@@ -51,15 +51,16 @@ public class AuthenticationService {
     }
 
     public Optional<AuthenticationToken> tryToLogin(LoginCredentials credentials) {
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add(CLIENT_ID_PARAM_NAME, authenticationProperties.getClientId());
-        body.add(CLIENT_SECRET_PARAM_NAME, authenticationProperties.getClientSecret());
-        body.add(GRANT_TYPE_PARAM_NAME, GRANT_TYPE_PASSWORD);
-        body.add(USERNAME_PARAM_NAME, credentials.getUsername());
-        body.add(PASSWORD_PARAM_NAME, credentials.getPassword());
+        return tryToLogin(credentials.getUsername(), credentials.getPassword());
+    }
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, EMPTY_HEADERS);
+    public Optional<AuthenticationToken> tryToLogin(String username, String password) {
+        HttpEntity<MultiValueMap<String, String>> request = buildLoginRequest(username, password);
+        return tryToRequestAuthenticationToken(request);
+    }
 
+    public AuthenticationToken login(String username, String password) {
+        HttpEntity<MultiValueMap<String, String>> request = buildLoginRequest(username, password);
         return requestAuthenticationToken(request);
     }
 
@@ -91,7 +92,7 @@ public class AuthenticationService {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, EMPTY_HEADERS);
 
-        return requestAuthenticationToken(request);
+        return tryToRequestAuthenticationToken(request);
     }
 
     public Optional<UserInfo> tryToGetUserInfo(String accessToken) {
@@ -116,7 +117,18 @@ public class AuthenticationService {
         return userInfo;
     }
 
-    private Optional<AuthenticationToken> requestAuthenticationToken(HttpEntity<MultiValueMap<String, String>> request) {
+    private HttpEntity<MultiValueMap<String, String>> buildLoginRequest(String username, String password) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add(CLIENT_ID_PARAM_NAME, authenticationProperties.getClientId());
+        body.add(CLIENT_SECRET_PARAM_NAME, authenticationProperties.getClientSecret());
+        body.add(GRANT_TYPE_PARAM_NAME, GRANT_TYPE_PASSWORD);
+        body.add(USERNAME_PARAM_NAME, username);
+        body.add(PASSWORD_PARAM_NAME, password);
+
+        return new HttpEntity<>(body, EMPTY_HEADERS);
+    }
+
+    private Optional<AuthenticationToken> tryToRequestAuthenticationToken(HttpEntity<MultiValueMap<String, String>> request) {
         Optional<AuthenticationToken> token;
 
         try {
@@ -132,5 +144,16 @@ public class AuthenticationService {
         }
 
         return token;
+    }
+
+    private AuthenticationToken requestAuthenticationToken(HttpEntity<MultiValueMap<String, String>> request) {
+        ResponseEntity<AuthenticationToken> response = restTemplate.exchange(
+                authenticationProperties.getAccessTokenUri(),
+                HttpMethod.POST,
+                request,
+                AuthenticationToken.class
+        );
+
+        return response.getBody();
     }
 }
