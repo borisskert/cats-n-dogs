@@ -16,7 +16,7 @@ services:
       - "--debug"
 
   keycloak_config_import:
-    image: adorsys/keycloak-config-cli:v0.5.0-5.0.0
+    image: adorsys/keycloak-config-cli:v0.6.0-5.0.0
     depends_on:
       - keycloak
     links:

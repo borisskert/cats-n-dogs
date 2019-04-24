@@ -1,5 +1,6 @@
 package com.github.borisskert.example.springboot.authentication.filter;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.github.borisskert.example.springboot.authentication.TokenConstants;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationToken;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationTokenAuthentication;
@@ -70,7 +71,7 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private void refreshTokens(HttpServletResponse response, AuthenticationTokenValidation validation ) {
-        AuthenticationToken refreshedToken = validation.getAuthenticationToken();
+        AuthenticationToken refreshedToken = validation.getRefreshedAuthenticationToken();
 
         response.addCookie(cookieService.createAccessTokenCookie(refreshedToken.getAccessToken(), refreshedToken.getExpiresIn()));
         response.addCookie(cookieService.createRefreshTokenCookie(refreshedToken.getRefreshToken(), refreshedToken.getRefreshExpiresIn()));
@@ -109,17 +110,17 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private Authentication getAuthentication(AuthenticationTokenValidation validation) {
-        String accessToken = validation.getValidatedAccessToken();
         String refreshToken = validation.getValidatedRefreshAccessToken();
         UserInfo userInfo = validation.getUserInfo();
 
-        List<SimpleGrantedAuthority> authorities = jwtService.getAuthorities(accessToken);
+        DecodedJWT decodedToken = validation.getDecodedToken();
+        List<SimpleGrantedAuthority> authorities = jwtService.getAuthorities(decodedToken);
 
         return new AuthenticationTokenAuthentication(
                 userInfo.getSubject(),
                 userInfo,
                 authorities,
-                new AuthenticationTokenAuthentication.AccessAndRefreshToken(accessToken, refreshToken)
+                new AuthenticationTokenAuthentication.AccessAndRefreshToken(decodedToken.getToken(), refreshToken)
         );
     }
 

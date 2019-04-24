@@ -9,4 +9,9 @@ application:
     access-token-uri: http://localhost:9090/auth/realms/cats-n-dogs/protocol/openid-connect/token
     user-info-uri: http://localhost:9090/auth/realms/cats-n-dogs/protocol/openid-connect/userinfo
     end-session-endpoint: http://localhost:9090/auth/realms/cats-n-dogs/protocol/openid-connect/logout
+    issuer: http://localhost:9090/auth/realms/cats-n-dogs
+    certs-uri: http://localhost:9090/auth/realms/cats-n-dogs/protocol/openid-connect/certs
     use-secure-cookies: false
+    user-info-cache:
+      max-entries: 1000
+      expiry-in-seconds: 3600

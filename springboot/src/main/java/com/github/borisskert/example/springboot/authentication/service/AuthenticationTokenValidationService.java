@@ -1,5 +1,6 @@
 package com.github.borisskert.example.springboot.authentication.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationToken;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationTokenValidation;
 import com.github.borisskert.example.springboot.authentication.model.UserInfo;
@@ -11,10 +12,17 @@ import java.util.Optional;
 @Service
 public class AuthenticationTokenValidationService {
     private final AuthenticationService authenticationService;
+    private final UserInfoService userInfoService;
+    private final JwtService jwtService;
 
     @Autowired
-    public AuthenticationTokenValidationService(AuthenticationService authenticationService) {
+    public AuthenticationTokenValidationService(
+            AuthenticationService authenticationService,
+            UserInfoService userInfoService, JwtService jwtService
+    ) {
         this.authenticationService = authenticationService;
+        this.userInfoService = userInfoService;
+        this.jwtService = jwtService;
     }
 
     public AuthenticationTokenValidation validate(String accessToken, String refreshToken) {
@@ -25,7 +33,7 @@ public class AuthenticationTokenValidationService {
         } else if (accessToken != null) {
             validation = validateTokens(accessToken, refreshToken);
         } else {
-            validation = refreshTokens(accessToken, refreshToken);
+            validation = refreshTokens(refreshToken);
         }
 
         return validation;
@@ -33,42 +41,33 @@ public class AuthenticationTokenValidationService {
 
     private AuthenticationTokenValidation validateTokens(String accessToken, String refreshToken) {
         AuthenticationTokenValidation validation;
-        Optional<UserInfo> maybeUserInfo = authenticationService.tryToGetUserInfo(accessToken);
+        Optional<DecodedJWT> maybeToken = jwtService.tryToDecodeVerified(accessToken);
 
-        if (maybeUserInfo.isPresent()) {
-            validation = AuthenticationTokenValidation.valid(accessToken, refreshToken, maybeUserInfo.get());
+        if (maybeToken.isPresent()) {
+            UserInfo userInfo = userInfoService.retrieveUserInfo(accessToken);
+            validation = AuthenticationTokenValidation.valid(maybeToken.get(), refreshToken, userInfo);
         } else if (refreshToken == null) {
-            validation = AuthenticationTokenValidation.invalid(accessToken, refreshToken);
+            validation = AuthenticationTokenValidation.invalid();
         } else {
-            validation = refreshTokens(accessToken, refreshToken);
+            validation = refreshTokens(refreshToken);
         }
 
         return validation;
     }
 
-    private AuthenticationTokenValidation refreshTokens(String accessToken, String refreshToken) {
+    private AuthenticationTokenValidation refreshTokens(String refreshToken) {
         AuthenticationTokenValidation validation;
         Optional<AuthenticationToken> maybeRefreshedToken = authenticationService.tryToRefresh(refreshToken);
 
         if (maybeRefreshedToken.isPresent()) {
             AuthenticationToken refreshedToken = maybeRefreshedToken.get();
-            Optional<UserInfo> userInfo = authenticationService.tryToGetUserInfo(refreshedToken.getAccessToken());
-
-            if (userInfo.isPresent()) {
-                validation = AuthenticationTokenValidation.refreshed(refreshedToken, userInfo.get());
-            } else {
-                throw new AuthenticationTokenValidationException("Should never happen: Cant get user info for recently refreshed access token");
-            }
+            DecodedJWT decodedToken = jwtService.decodeVerified(refreshedToken.getAccessToken());
+            UserInfo userInfo = userInfoService.retrieveUserInfo(refreshedToken.getAccessToken());
+            validation = AuthenticationTokenValidation.refreshed(refreshedToken, decodedToken, userInfo);
         } else {
-            validation = AuthenticationTokenValidation.invalid(accessToken, refreshToken);
+            validation = AuthenticationTokenValidation.invalid();
         }
 
         return validation;
-    }
-
-    static class AuthenticationTokenValidationException extends RuntimeException {
-        public AuthenticationTokenValidationException(String message) {
-            super(message);
-        }
     }
 }

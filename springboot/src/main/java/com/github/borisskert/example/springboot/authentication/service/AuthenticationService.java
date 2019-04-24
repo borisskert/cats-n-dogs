@@ -4,7 +4,6 @@ import com.github.borisskert.example.springboot.authentication.AuthenticationPro
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationToken;
 import com.github.borisskert.example.springboot.authentication.model.AuthenticationTokenAuthentication;
 import com.github.borisskert.example.springboot.authentication.model.LoginCredentials;
-import com.github.borisskert.example.springboot.authentication.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +21,6 @@ import java.util.Optional;
 public class AuthenticationService {
 
     private static final HttpHeaders EMPTY_HEADERS = new HttpHeaders();
-    private static final MultiValueMap<String, String> EMPTY_BODY = new LinkedMultiValueMap<>();
 
     private static final String REFRESH_TOKEN_PARAM_NAME = "refresh_token";
     private static final String ACCESS_TOKEN_PARAM_NAME = "access_token";
@@ -92,28 +90,6 @@ public class AuthenticationService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, EMPTY_HEADERS);
 
         return requestAuthenticationToken(request);
-    }
-
-    public Optional<UserInfo> tryToGetUserInfo(String accessToken) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + accessToken);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(EMPTY_BODY, headers);
-
-        Optional<UserInfo> userInfo;
-        try {
-            ResponseEntity<UserInfo> response = restTemplate.exchange(
-                    authenticationProperties.getUserInfoUri(),
-                    HttpMethod.GET,
-                    request,
-                    UserInfo.class
-            );
-            userInfo = Optional.ofNullable(response.getBody());
-        } catch (HttpClientErrorException e) {
-            userInfo = Optional.empty();
-        }
-
-        return userInfo;
     }
 
     private Optional<AuthenticationToken> requestAuthenticationToken(HttpEntity<MultiValueMap<String, String>> request) {

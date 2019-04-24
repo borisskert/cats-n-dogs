@@ -1,19 +1,21 @@
 package com.github.borisskert.example.springboot.authentication.model;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 public class AuthenticationTokenValidation {
-    private final String validatedAccessToken;
     private final String validatedRefreshAccessToken;
-    private final AuthenticationToken authenticationToken;
+    private final AuthenticationToken refreshedAuthenticationToken;
+    private final DecodedJWT decodedToken;
     private final UserInfo userInfo;
 
     private AuthenticationTokenValidation(
-            String validatedAccessToken,
             String validatedRefreshAccessToken,
-            AuthenticationToken authenticationToken,
-            UserInfo userInfo) {
-        this.validatedAccessToken = validatedAccessToken;
+            AuthenticationToken refreshedAuthenticationToken,
+            DecodedJWT decodedToken, UserInfo userInfo
+    ) {
         this.validatedRefreshAccessToken = validatedRefreshAccessToken;
-        this.authenticationToken = authenticationToken;
+        this.refreshedAuthenticationToken = refreshedAuthenticationToken;
+        this.decodedToken = decodedToken;
         this.userInfo = userInfo;
     }
 
@@ -22,35 +24,35 @@ public class AuthenticationTokenValidation {
     }
 
     public boolean isHasBeenRefreshed() {
-        return authenticationToken != null;
+        return refreshedAuthenticationToken != null;
     }
 
-    public AuthenticationToken getAuthenticationToken() {
-        return authenticationToken;
+    public AuthenticationToken getRefreshedAuthenticationToken() {
+        return refreshedAuthenticationToken;
+    }
+
+    public DecodedJWT getDecodedToken() {
+        return decodedToken;
     }
 
     public UserInfo getUserInfo() {
         return userInfo;
     }
 
-    public static AuthenticationTokenValidation invalid(String validatedAccessToken, String validatedRefreshAccessToken) {
-        return new AuthenticationTokenValidation(validatedAccessToken, validatedRefreshAccessToken, null, null);
+    public static AuthenticationTokenValidation invalid() {
+        return new AuthenticationTokenValidation(null, null, null, null);
     }
 
     public static AuthenticationTokenValidation missing() {
         return new AuthenticationTokenValidation(null, null, null, null);
     }
 
-    public static AuthenticationTokenValidation refreshed(AuthenticationToken refreshedToken, UserInfo userInfo) {
-        return new AuthenticationTokenValidation(refreshedToken.getAccessToken(), refreshedToken.getRefreshToken(), refreshedToken, userInfo);
+    public static AuthenticationTokenValidation refreshed(AuthenticationToken refreshedToken, DecodedJWT decodedToken, UserInfo userInfo) {
+        return new AuthenticationTokenValidation(refreshedToken.getRefreshToken(), refreshedToken, decodedToken, userInfo);
     }
 
-    public static AuthenticationTokenValidation valid(String validAccessToken, String validRefreshToken, UserInfo userInfo) {
-        return new AuthenticationTokenValidation(validAccessToken, validRefreshToken, null, userInfo);
-    }
-
-    public String getValidatedAccessToken() {
-        return validatedAccessToken;
+    public static AuthenticationTokenValidation valid(DecodedJWT decodedToken, String validRefreshToken, UserInfo userInfo) {
+        return new AuthenticationTokenValidation(validRefreshToken, null, decodedToken, userInfo);
     }
 
     public String getValidatedRefreshAccessToken() {
