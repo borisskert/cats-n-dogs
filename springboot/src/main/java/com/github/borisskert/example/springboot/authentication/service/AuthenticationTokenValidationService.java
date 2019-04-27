@@ -65,7 +65,7 @@ public class AuthenticationTokenValidationService {
             UserInfo userInfo = userInfoService.retrieveUserInfo(refreshedToken.getAccessToken());
             validation = AuthenticationTokenValidation.refreshed(refreshedToken, decodedToken, userInfo);
         } else {
-            validation = AuthenticationTokenValidation.invalid();
+            validation = AuthenticationTokenValidation.invalid(refreshToken);
         }
 
         return validation;

@@ -43,6 +43,10 @@ public class AuthenticationTokenValidation {
         return new AuthenticationTokenValidation(null, null, null, null);
     }
 
+    public static AuthenticationTokenValidation invalid(String refreshToken) {
+        return new AuthenticationTokenValidation(refreshToken, null, null, null);
+    }
+
     public static AuthenticationTokenValidation missing() {
         return new AuthenticationTokenValidation(null, null, null, null);
     }
