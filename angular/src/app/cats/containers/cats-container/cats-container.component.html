@@ -1,4 +1,4 @@
-<app-cat-list *ngIf="!(catToCreate$ | async)"
+<app-cat-list *ngIf="!(catToCreate$ | async) && !(selectedCat$ | async)"
   [cats]="cats$ | async"
   (create)="onNewCat($event)"
   (showDetails)="onShowDetails($event)"
