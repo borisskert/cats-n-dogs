@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MessagingModule } from './messaging/messaging.module';
 import { UsersComponent } from './components/users/users.component';
-import { CatsComponent } from './components/cats/cats.component';
 import { NavigationModule } from './navigation/navigation.module';
 import { HomeComponent } from './components/home/home.component';
 import { DogsComponent } from './components/dogs/dogs.component';
@@ -21,7 +20,6 @@ import { StoreModule } from './store/store.module';
   declarations: [
     AppComponent,
     UsersComponent,
-    CatsComponent,
     HomeComponent,
     DogsComponent
   ],
