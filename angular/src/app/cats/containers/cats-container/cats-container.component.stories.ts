@@ -19,8 +19,6 @@ import { Effects } from '../../+state/effects';
     <div>
       <button (click)="threeCats()">simulate load 3 cats</button>
       <button (click)="emptyCats()">simulate empty cats</button>
-      <!--<button (click)="createCat()">simulate expiry</button>-->
-      <!--<button (click)="logout()">simulate logout</button>-->
     </div>
     <app-cats-container></app-cats-container>
   `,
