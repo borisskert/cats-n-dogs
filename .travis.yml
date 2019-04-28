@@ -18,7 +18,7 @@ matrix:
       deploy:
         - skip_cleanup: true
           provider: script
-          script: .travis/deploy_angular.bash
+          script: cd "${TRAVIS_BUILD_DIR}" && .travis/deploy_angular.bash
           on:
             branch: master
             tags: false
@@ -37,7 +37,7 @@ matrix:
       deploy:
         - skip_cleanup: true
           provider: script
-          script: .travis/deploy_springboot.bash
+          script: cd "${TRAVIS_BUILD_DIR}" && .travis/deploy_springboot.bash
           on:
             branch: master
             tags: false
