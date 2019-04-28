@@ -1,9 +1,9 @@
 import { AuthenticationState, initialState as authenticationInitialState } from '../authentication/+state/contract';
-import { MessagingState, initialState as messagingInitialState } from '../messaging/+state/contract';
-import { NavigationState, initialState as navigationInitialState } from '../navigation/+state/contract';
+import { initialState as messagingInitialState, MessagingState } from '../messaging/+state/contract';
+import { initialState as navigationInitialState, NavigationState } from '../navigation/+state/contract';
 import { CatState, initialState as catInitialState } from '../cats/+state/contract';
-import { VersionState, initialState as appInitialState } from '../version/+state/contract';
-import { StoreState, initialState as storeInitialState } from '../store/+state/contract';
+import { initialState as appInitialState, VersionState } from '../version/+state/contract';
+import { initialState as storeInitialState, StoreState } from '../store/+state/contract';
 
 export interface State {
   authentication: AuthenticationState;

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserInfo } from '../../models/user-info.interface';
 import { Store } from '@ngrx/store';
-import { GetUserInfo, TryLoadUserInfo, TryLogin, TryLogout } from '../../+state/actions';
+import { GetUserInfo, TryLogin, TryLogout } from '../../+state/actions';
 import { LoginCredentials } from '../../models/login-credentials.interface';
-import { userInfo, isAuthenticated } from '../../+state/selectors';
+import { isAuthenticated, userInfo } from '../../+state/selectors';
 import { State } from '../../../+state/contract';
 
 @Component({

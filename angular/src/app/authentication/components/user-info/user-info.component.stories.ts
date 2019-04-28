@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/angular';
 
-import { boolean, array, text, withKnobs } from '@storybook/addon-knobs';
+import { array, boolean, text, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { UserInfoComponent } from './user-info.component';
 
