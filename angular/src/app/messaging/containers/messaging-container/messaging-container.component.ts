@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../../../+state/contract';
-import { getAutoDismiss, getMessageIds, getMessages } from '../../+state/selectors';
+import { getMessageIds, getMessages } from '../../+state/selectors';
 import { Observable } from 'rxjs';
 import { Message } from '../../models/message.interface';
 import { AutoDismissMessages, CloseMessage, FixMessage, UnfixMessage } from '../../+state/actions';

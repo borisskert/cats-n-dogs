@@ -1,23 +1,46 @@
-language: generic
+---
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - "11"
+      services:
+        - docker
+      addons:
+        chrome: stable
+      script:
+        - cd angular
+        - npm ci
+        - npm run lint
+        - npm run ci-test
+        - npm run build-storybook
+        - npm run prod
+      deploy:
+        - skip_cleanup: true
+          provider: script
+          script: .travis/deploy_angular.bash
+          on:
+            branch: master
+            tags: false
 
-services:
-  - docker
-
-cache:
-  directories:
-    - $HOME/.m2
-
-script:
-  - /bin/bash .travis/build.bash
-
-deploy:
-  -
-    skip_cleanup: true
-    provider: script
-    script: /bin/bash .travis/deploy.bash
-    on:
-      branch: master
-      tags: false
+    - language: java
+      jdk:
+        - oraclejdk11
+      services:
+        - docker
+      cache:
+        directories:
+          - $HOME/.m2
+      script:
+        - cd springboot
+        - mvn clean package
+      deploy:
+        - skip_cleanup: true
+          provider: script
+          script: .travis/deploy_springboot.bash
+          on:
+            branch: master
+            tags: false
 
 env:
   global:

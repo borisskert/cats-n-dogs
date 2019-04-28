@@ -3,7 +3,8 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import {
   AuthenticationActions,
-  AuthenticationActionTypes, GotUserInfo,
+  AuthenticationActionTypes,
+  GotUserInfo,
   LoginFailure,
   LoginSuccessful,
   LogoutFailure,
@@ -21,7 +22,6 @@ import { InitNavigation, NavigationAction, SelectNavigationElement } from '../..
 import { NavigationService } from '../../navigation/services/navigation.service';
 import { newWarning } from '../../messaging/models/message.interface';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { UserInfo } from '../models/user-info.interface';
 
 @Injectable()
 export class Effects {

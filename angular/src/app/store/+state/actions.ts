@@ -1,6 +1,4 @@
 import { Action } from '@ngrx/store';
-import { Cat } from '../../cats/models/cat';
-import { CatActionType } from '../../cats/+state/actions';
 
 export enum StoreActionType {
   LoadStore = '[Store] Load Store',

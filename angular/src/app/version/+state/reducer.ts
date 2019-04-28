@@ -1,5 +1,5 @@
 import { AppAction, AppActionType } from './actions';
-import { VersionState, initialState } from './contract';
+import { initialState, VersionState } from './contract';
 
 export function reducer(state = initialState, action: AppAction): VersionState {
   switch (action.type) {

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CatListComponent } from './cat-list.component';
 import { CatListItemComponent } from '../cat-list-item/cat-list-item.component';
-import { getCats, getCatsArray } from '../../cats.mock';
+import { getCatsArray } from '../../cats.mock';
 
 describe('CatListComponent', () => {
   let component: CatListComponent;
