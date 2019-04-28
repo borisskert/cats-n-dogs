@@ -1,6 +1,6 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 
-import { array, object, date, select, text, withKnobs } from '@storybook/addon-knobs';
+import { array, date, object, select, text, withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import { MessageToasterComponent } from './message-toaster.component';
@@ -11,11 +11,10 @@ storiesOf('Messaging', module)
     moduleMetadata({
       imports: [],
       declarations: [
-        MessageComponent
+        MessageComponent,
       ],
     })
   )
-
   .add('MessageToasterComponent', () => ({
       component: MessageToasterComponent,
       props: {
